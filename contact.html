@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Contact Us</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        overflow-x: hidden;
+      }
+      /* Hero Section */
+      .hero-section {
+        height: 100vh;
+        background: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.5),
+            rgba(0, 0, 0, 0.7)
+          ),
+          url("img/cbg.jpeg") no-repeat center center/cover;
+        color: #fff;
+        position: relative;
+      }
+
+      .hero-section .btn {
+        border-radius: 50px;
+        transition: all 0.3s;
+      }
+
+      .hero-section .btn:hover {
+        background: #007bff;
+        color: #fff;
+        transform: translateY(-3px);
+      }
+
+      /* Map Styling */
+      .map-container {
+        overflow: hidden;
+        position: relative;
+        height: 400px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .map-container iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      /* Enhanced Contact Section Styling */
+      .contact-us {
+        background-color: #f8f9fa;
+        padding: 6rem 0;
+      }
+
+      .contact-us .container {
+        max-width: 1200px;
+      }
+
+      /* Form Styling Improvements */
+      .contact-us form {
+        background-color: white;
+        padding: 2.5rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+      }
+
+      .contact-us form:hover {
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        transform: translateY(-5px);
+      }
+
+      .contact-us .form-label {
+        color: #495057;
+        font-weight: 600;
+      }
+
+      .contact-us .form-control {
+        border: 1px solid #ced4da;
+        padding: 0.75rem 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .contact-us .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+      }
+
+      /* Contact Info Styling */
+      .contact-us {
+        background-color: white;
+        border-radius: 15px;
+        padding: 2.5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      }
+
+      .contact-us .contact-info h4 {
+        color: #343a40;
+        margin-bottom: 1.5rem;
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 0.5rem;
+      }
+
+      .contact-us .contact-info p i {
+        margin-right: 0.75rem;
+        color: #007bff;
+      }
+
+      .get {
+        background-color: #f1f3f5;
+        border-radius: 10px;
+        padding: 1.2rem;
+        margin-top: 1.2rem;
+      }
+
+      /* Business Hours Styling */
+      .contact-us .business-hours {
+        background-color: #f1f3f5;
+        border-radius: 10px;
+        padding: 1.2rem;
+        margin-top: 1.2rem;
+      }
+
+      .contact-us .business-hours p {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      /* Submit Button Enhancement */
+      .contact-us .btn-primary {
+        background-color: #007bff;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+      }
+
+      .contact-us .btn-primary:hover {
+        background-color: #0056b3;
+        transform: translateY(-3px);
+        box-shadow: 0 7px 14px rgba(0, 0, 0, 0.15);
+      }
+
+      /* Responsive Adjustments */
+      @media (max-width: 768px) {
+        .contact-us {
+          padding: 3rem 0;
+        }
+
+        .contact-us form,
+        .contact-us .contact-info {
+          padding: 1.5rem;
+        }
+      }
+
+      /* Responsive Fixes */
+      @media (max-width: 768px) {
+        .hero-section {
+          height: 70vh;
+        }
+
+        .hero-section .display-4 {
+          font-size: 2rem;
+        }
+      }
+      .navbar {
+        background: linear-gradient(45deg, #216cdd, #ae44593d);
+        width: 100%;
+      }
+
+      .dropdown-menu {
+        background: linear-gradient(45deg, #216cdd, #ae44593d);
+
+        color: white;
+      }
+
+      .nav-link {
+        position: relative;
+        left: 15px;
+      }
+
+      .navbar-brand {
+        color: #fff !important;
+        /* White text for brand name */
+        font-size: 1.5rem;
+      }
+
+      .navbar-nav .nav-link {
+        color: #fff !important;
+        /* White text for nav links */
+        font-size: 1.1rem;
+      }
+
+      .navbar-nav .nav-link:hover {
+        color: #ffd700 !important;
+        /* Gold color on hover */
+      }
+
+      .navbar-toggler-icon {
+        background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"%3E%3Cpath stroke="%23fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"/%3E%3C/svg%3E');
+      }
+      .map-container {
+        overflow: hidden;
+        position: relative;
+        height: 400px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .map-container iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      .contact-us {
+        padding: 2rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">
+          <b>ArtExpo</b>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">HOME</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Categories
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item" href="contact.html">Contact</a>
+                </li>
+                <li><a class="dropdown-item" href="Faq.html">FAQ</a></li>
+                <li>
+                  <a class="dropdown-item" href="dashboard.html">Dashbord</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="art.html">Art Gallery</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="culture.html">Cultural Events </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="user.html">User</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="submit.html">Submit</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="review.html">Review</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="blog.html">Blog</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Hero Section -->
+    <section
+      class="hero-section d-flex align-items-center justify-content-center text-center"
+    >
+      <div class="container text-white">
+        <h1 class="display-4 fw-bold">Get in Touch with Us</h1>
+        <p class="lead">
+          We’re here to help you with any inquiries or support. Let’s connect!
+        </p>
+        <a
+          href="#contact"
+          class="btn btn-outline-light btn-lg mt-3"
+          id="scrollToContact"
+          >Contact Us Now</a
+        >
+      </div>
+    </section>
+
+    <!-- Contact Us Section -->
+    <section class="contact-us py-5" id="contact">
+      <div class="container">
+        <div class="row g-5">
+          <!-- Contact Form -->
+          <div class="col-lg-6">
+            <form id="contactForm">
+              <div class="mb-4">
+                <label for="name" class="form-label fw-semibold">Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  class="form-control rounded-3"
+                  placeholder="Your full name"
+                />
+                <div class="invalid-feedback">Name is required.</div>
+              </div>
+              <div class="mb-4">
+                <label for="email" class="form-label fw-semibold">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  class="form-control rounded-3"
+                  placeholder="Your email address"
+                />
+                <div class="invalid-feedback">
+                  Please provide a valid email.
+                </div>
+              </div>
+              <div class="mb-4">
+                <label for="message" class="form-label fw-semibold"
+                  >Message</label
+                >
+                <textarea
+                  id="message"
+                  rows="4"
+                  class="form-control rounded-3"
+                  placeholder="Your message"
+                ></textarea>
+                <div class="invalid-feedback">Message cannot be empty.</div>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">
+                Send Message
+              </button>
+            </form>
+          </div>
+
+          <!-- Contact Info -->
+          <div class="col-lg-6 contact-info">
+            <div class="get">
+              <h4>Get in Touch</h4>
+              <p class="text-muted mb-2">
+                <i class="bi bi-envelope-fill"></i> support@example.com
+              </p>
+              <p class="text-muted mb-2">
+                <i class="bi bi-telephone-fill"></i> +1 234 567 890
+              </p>
+              <p class="text-muted mb-4">
+                <i class="bi bi-geo-alt-fill"></i> 123 Art & Culture Avenue,
+                Creativity City, Hyderabad
+              </p>
+            </div>
+            <div class="business-hours">
+              <h4>Business Hours</h4>
+              <p class="text-muted">
+                Monday - Friday <strong>9:00 AM - 5:00 PM</strong>
+              </p>
+              <p class="text-muted">
+                Saturday <strong>10:00 AM - 4:00 PM</strong>
+              </p>
+              <p class="text-muted">Sunday <strong>Closed</strong></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Map -->
+        <section class="contact-us">
+          <h1>Contact Us</h1>
+          <div class="map-container">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.7369263491526!2d78.48667181535678!3d17.385044088088393!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb973b3e2b9dd7%3A0x1211f46a70ed99ec!2sCharminar%2C%20Hyderabad%2C%20Telangana%20500002!5e0!3m2!1sen!2sin!4v1686006000875!5m2!1sen!2sin"
+              loading="lazy"
+            ></iframe>
+          </div>
+        </section>
+      </div>
+    </section>
+    <footer class="footer py-3 text-white text-center bg-black">
+      <p class="mb-0">
+        &copy; 2024 Mastering Art Techniques. All Rights Reserved.
+      </p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document
+        .getElementById("contactForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          let isValid = true;
+
+          const name = document.getElementById("name");
+          const email = document.getElementById("email");
+          const message = document.getElementById("message");
+
+          if (!name.value.trim()) {
+            name.classList.add("is-invalid");
+            isValid = false;
+          } else {
+            name.classList.remove("is-invalid");
+          }
+
+          const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z-]+\.[a-zA-Z]{2,}$/;
+          if (!emailRegex.test(email.value.trim())) {
+            email.classList.add("is-invalid");
+            isValid = false;
+          } else {
+            email.classList.remove("is-invalid");
+          }
+
+          if (!message.value.trim()) {
+            message.classList.add("is-invalid");
+            isValid = false;
+          } else {
+            message.classList.remove("is-invalid");
+          }
+
+          if (isValid) {
+            alert("Your message has been sent successfully!");
+            document.getElementById("contactForm").reset();
+          }
+        });
+      // Smooth Scroll Functionality
+      document
+        .getElementById("scrollToContact")
+        .addEventListener("click", function (e) {
+          e.preventDefault(); // Prevent default anchor behavior
+
+          // Get the target element
+          const contactSection = document.getElementById("contact");
+
+          // Scroll smoothly to the target
+          contactSection.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        });
+    </script>
+  </body>
+</html>

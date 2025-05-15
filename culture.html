@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cultural Events Listings</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+      integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"
+      integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+      integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <style>
+      /* body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+      } */
+      body {
+        background: radial-gradient(
+          circle,
+          rgba(238, 174, 202, 1) 0%,
+          rgba(148, 187, 233, 1) 100%
+        );
+        background-repeat: no-repeat;
+        overflow-x: hidden;
+      }
+      .container {
+        max-width: 1200px;
+        margin: auto;
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+      .filter-sort {
+        justify-content: space-between;
+        margin-bottom: 20px;
+        align-items: center;
+      }
+      .filter-sort select,
+      .filter-sort input {
+        padding: 10px;
+        margin-right: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 200px;
+        margin-top: 10px;
+      }
+      .event-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+
+        padding-right: 20px;
+      }
+      .event-card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+        position: relative;
+      }
+      .event-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      }
+      .event-image {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+      }
+      .event-details {
+        padding: 15px;
+      }
+      .event-title {
+        font-size: 22px;
+        color: #333;
+        margin: 5px 0;
+      }
+      .event-date,
+      .event-venue {
+        font-size: 14px;
+        color: #777;
+      }
+      .quick-view {
+        cursor: pointer;
+        color: #007bff;
+        text-decoration: underline;
+        font-size: 14px;
+        margin-top: 10px;
+      }
+      .modal {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 50%;
+        max-width: 600px;
+        height: auto;
+        background-color: #fff;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        border-radius: 20px; /* Changed to a more rounded shape */
+        z-index: 1000;
+        overflow: hidden;
+        animation: fadeIn 0.3s;
+      }
+      .modal-content {
+        padding: 20px;
+      }
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .modal-title {
+        font-size: 24px;
+        color: #333;
+      }
+      .close {
+        cursor: pointer;
+        color: #ff0000;
+        font-size: 18px;
+      }
+      .modal-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
+      }
+      .modal-description {
+        margin-top: 15px;
+        font-size: 16px;
+        color: #555;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      /* Responsive styles */
+      @media (max-width: 768px) {
+        .modal {
+          width: 90%;
+        }
+      }
+      @media (max-width: 480px) {
+        .modal {
+          width: 95%;
+        }
+      }
+      .navbar {
+        background: linear-gradient(45deg, #216cdd, #ae44593d);
+        width: 100%;
+      }
+
+      .dropdown-menu {
+        background: linear-gradient(45deg, #216cdd, #ae44593d);
+
+        color: white;
+      }
+
+      .nav-link {
+        position: relative;
+        left: 15px;
+      }
+
+      .navbar-brand {
+        color: #fff !important;
+        /* White text for brand name */
+        font-size: 1.5rem;
+      }
+
+      .navbar-nav .nav-link {
+        color: #fff !important;
+        /* White text for nav links */
+        font-size: 1.1rem;
+      }
+
+      .navbar-nav .nav-link:hover {
+        color: #ffd700 !important;
+        /* Gold color on hover */
+      }
+
+      .navbar-toggler-icon {
+        background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"%3E%3Cpath stroke="%23fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"/%3E%3C/svg%3E');
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">
+          <b>ArtExpo</b>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">HOME</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Categories
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item" href="contact.html">Contact</a>
+                </li>
+                <li><a class="dropdown-item" href="Faq.html">FAQ</a></li>
+                <li>
+                  <a class="dropdown-item" href="dashboard.html">Dashbord</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="art.html">Art Gallery</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="culture.html">Cultural Events </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="user.html">User</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="submit.html">Submit</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="review.html">Review</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="blog.html">Blog</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <main style="min-height: 100vh">
+      <div class="container mt-5,">
+        <h1>Cultural Events Listings</h1>
+        <div class="filter-sort">
+          <input type="text" id="search" placeholder="Search events..." />
+          <select id="event-type">
+            <option value="">All Event Types</option>
+            <option value="festival">Festivals</option>
+            <option value="concert">Concerts</option>
+            <option value="exhibition">Exhibitions</option>
+          </select>
+          <select id="sort-options">
+            <option value="soonest">Soonest</option>
+            <option value="popular">Most Popular</option>
+          </select>
+        </div>
+
+        <div class="event-list" id="event-list">
+          <!-- Event Cards will be dynamically inserted here -->
+        </div>
+      </div>
+
+      <!-- Modal for Quick View -->
+      <div class="modal" id="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <span class="modal-title" id="modal-title"></span>
+            <span class="close" onclick="closeModal()">&times;</span>
+          </div>
+          <div class="text-center">
+            <img
+              src=""
+              alt="Event Image"
+              class="modal-image"
+              id="modal-image"
+            />
+            <p class="modal-description" id="modal-details"></p>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="footer py-3 text-white text-center bg-black mt-5">
+      <p class="mb-0">
+        &copy; 2024 Mastering Art Techniques. All Rights Reserved.
+      </p>
+    </footer>
+    <script>
+      const events = [
+        {
+          id: 1,
+          title: "Spring Music Festival",
+          date: "2023-04-12",
+          venue: "City Park",
+          type: "festival",
+          details: "Join us for a day of music and fun.",
+          image:
+            "https://t4.ftcdn.net/jpg/07/88/07/49/360_F_788074928_gRLU1pd1trHfuzUj0eaDk2l4kG5TduU5.jpg",
+          pageName: "Springmusic.html",
+        },
+        {
+          id: 2,
+          title: "Art Exhibition",
+          date: "2023-06-15",
+          venue: "Art Gallery",
+          type: "exhibition",
+          details: "Explore the world of modern art.",
+          image:
+            "https://www.shutterstock.com/shutterstock/videos/1099325391/thumb/10.jpg?ip=x480",
+          pageName: "Artexhibition.html",
+        },
+        {
+          id: 3,
+          title: "Jazz Night",
+          date: "2023-05-20",
+          venue: "Downtown Club",
+          type: "concert",
+          details: "Enjoy a night of smooth jazz.",
+          image:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5ir6ooKDgxNvoJd1TZcDbVn20KZ6ucUfsaA&s",
+          pageName: "jazznight.html",
+        },
+        {
+          id: 4,
+          title: "Food Festival",
+          date: "2023-07-10",
+          venue: "Central Square",
+          type: "festival",
+          details: "Taste cuisines from around the world.",
+          image:
+            "https://img.freepik.com/premium-photo/vibrant-street-food-festival-scene-with-diverse-street-food-offerings-high-resolution-festive_980716-196727.jpg",
+          pageName: "Foodfestival.html",
+        },
+        {
+          id: 5,
+          title: "Photography Exhibition",
+          date: "2023-08-05",
+          venue: "Gallery 101",
+          type: "exhibition",
+          details: "Showcasing local photographers.",
+          image:
+            "https://elements-resized.envatousercontent.com/elements-video-cover-images/files/372192474/Preview.jpg?w=500&cf_fit=cover&q=85&format=auto&s=7b842ed55320ae6dee05385970855fb6c8fb688400b8ae29d1a98ab7cbeb6146",
+          pageName: "Photographyexhibition.html",
+        },
+        {
+          id: 6,
+          title: "Rock Concert",
+          date: "2023-09-01",
+          venue: "Arena",
+          type: "concert",
+          details: "Live performances by popular bands.",
+          image: "https://images7.alphacoders.com/133/1339451.png",
+          pageName: "Rockconcert.html",
+        },
+        {
+          id: 7,
+          title: "Cultural Dance Festival",
+          date: "2023-10-15",
+          venue: "Town Hall",
+          type: "festival",
+          details: "Experience dances from different cultures.",
+          image:
+            "https://www.hoteldekho.com/blog/wp-content/uploads/2022/03/Day-3-img-3.jpg",
+          pageName: "Culturaldance.html",
+        },
+        {
+          id: 8,
+          title: "Film Screening",
+          date: "2023-11-20",
+          venue: "Cinema",
+          type: "exhibition",
+          details: "Watch the latest indie films.",
+          image:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShcjH5x5F8dAz_FIjPnsSSPpcT_fHkJSg-cA&s",
+          pageName: "Filmscreening.html",
+        },
+        {
+          id: 9,
+          title: "Classical Music Night",
+          date: "2023-12-25",
+          venue: "Concert Hall",
+          type: "concert",
+          details: "A night of classical masterpieces.",
+          image:
+            "https://i.pinimg.com/736x/1f/5e/cc/1f5eccc2c231ad60fbb1041bf7d5aa81.jpg",
+          pageName: "Classicalmusic.html",
+        },
+        {
+          id: 10,
+          title: "Local Art Fair",
+          date: "2023-01-30",
+          venue: "Community Center",
+          type: "exhibition",
+          details: "Support local artists and crafters.",
+          image:
+            "https://media.assettype.com/freepressjournal/2022-12/03bf89d8-3565-410d-85a0-aabddc44c590/mumbai_urban_festival.jpg",
+          pageName: "Artfair.html",
+        },
+        {
+          id: 11,
+          title: "Winter Wonderland Festival",
+          date: "2023-12-10",
+          venue: "City Park",
+          type: "festival",
+          details: "Celebrate winter with fun activities.",
+          image:
+            "https://junctionarts.org/wp-content/uploads/2024/02/PhilN231-scaled.jpg",
+          pageName: "Winterwonderland.html",
+        },
+        {
+          id: 12,
+          title: "Indie Music Showcase",
+          date: "2023-11-15",
+          venue: "Local Bar",
+          type: "concert",
+          details: "Support up-and-coming indie artists.",
+          image:
+            "https://images.yourstory.com/cs/2/28b451402d6a11e9aa979329348d4c3e/SaskiaLaroobandNetherlands-1713033627437.JPG",
+          pageName: "Indiemusic.html",
+        },
+        {
+          id: 13,
+          title: "Culinary Arts Exhibition",
+          date: "2023-09-10",
+          venue: "Food Court",
+          type: "exhibition",
+          details: "Discover culinary innovations.",
+          image:
+            "https://i0.wp.com/utahagenda.com/wp-content/uploads/2022/03/art-gallery-show-exhibition-salt-lake-city-utah.jpg?resize=1038%2C576&ssl=1",
+          pageName: "CulinaryArts.html",
+        },
+        {
+          id: 14,
+          title: "Heritage Festival",
+          date: "2023-08-20",
+          venue: "Old Town",
+          type: "festival",
+          details: "Experience the richness of our local heritage.",
+          image:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRI7fCR7X5AMsIILe4UBMfWulc7nCdZiEgZQ&s",
+          pageName: "Heritagefestival.html",
+        },
+        {
+          id: 15,
+          title: "Pop Music Festival",
+          date: "2023-07-25",
+          venue: "Main Square",
+          type: "concert",
+          details: "Enjoy performances by top pop artists.",
+          image:
+            "https://c4.wallpaperflare.com/wallpaper/802/345/303/dj-hardwell-festival-music-wallpaper-preview.jpg",
+          pageName: "popmusic.html",
+        },
+        {
+          id: 16,
+          title: "Outdoor Art Installation",
+          date: "2023-06-05",
+          venue: "City Gardens",
+          type: "exhibition",
+          details: "Explore art in a natural setting.",
+          image:
+            "https://t4.ftcdn.net/jpg/08/23/76/71/360_F_823767101_86BaGHWGULblgAzZ3K6NiLgjRM2LNQeC.jpg",
+          pageName: "Outdoorart.html",
+        },
+        {
+          id: 17,
+          title: "Dance Recital",
+          date: "2023-05-15",
+          venue: "Dance Studio",
+          type: "festival",
+          details: "Watch a showcase of dance talent.",
+          image:
+            "https://t3.ftcdn.net/jpg/09/63/52/82/360_F_963528269_RUvXcLSqNAr1gjl1Y4gPanUhdnP1a8lF.jpg",
+          pageName: "Dancerecital.html",
+        },
+        {
+          id: 18,
+          title: "Jazz and Blues Festival",
+          date: "2023-04-30",
+          venue: "Riverside Park",
+          type: "concert",
+          details: "A celebration of jazz and blues music.",
+          image:
+            "https://curlytales.com/wp-content/uploads/2024/07/Jazz-Colosseum.jpg",
+          pageName: "jazzblue.html",
+        },
+        {
+          id: 19,
+          title: "Artisan Market",
+          date: "2023-03-10",
+          venue: "Town Square",
+          type: "exhibition",
+          details: "Shop handmade goods from local artisans.",
+          image:
+            "https://t3.ftcdn.net/jpg/10/57/77/38/360_F_1057773892_zbkKMdSysaq3iKefvbT4XAs6d8gEAUqn.jpg",
+          pageName: "Artisanmarket.html",
+        },
+        {
+          id: 20,
+          title: "World Music Festival",
+          date: "2023-03-25",
+          venue: "City Stadium",
+          type: "festival",
+          details: "Experience music from around the globe.",
+          image:
+            "https://c4.wallpaperflare.com/wallpaper/84/619/742/ultra-music-festival-wallpaper-preview.jpg",
+          pageName: "Worldmusic.html",
+        },
+        {
+          id: 21,
+          title: "Theater Performance",
+          date: "2023-02-20",
+          venue: "Main Stage",
+          type: "concert",
+          details: "Enjoy a night of theater and drama.",
+          image:
+            "https://w0.peakpx.com/wallpaper/83/425/HD-wallpaper-space-opera-theatre-by-jason-m-allen-invokes-metaverse-space-opera-theatre-fantasy-art-jason-m-allen-world-ai.jpg",
+          pageName: "Theaterperformance.html",
+        },
+        {
+          id: 22,
+          title: "Cultural Heritage Fair",
+          date: "2023-01-15",
+          venue: "Civic Center",
+          type: "exhibition",
+          details: "Celebrate diverse cultures.",
+          image:
+            "https://s3.india.com/wp-content/uploads/2024/08/Dont-Miss-Out-Top-7-Cultural-Festivals-You-Must-Attend-In-Chennai.jpg",
+          pageName: "Culheritage.html",
+        },
+        {
+          id: 23,
+          title: "Gospel Music Concert",
+          date: "2023-12-05",
+          venue: "Church Auditorium",
+          type: "concert",
+          details: "An uplifting evening of gospel music.",
+          image:
+            "https://t3.ftcdn.net/jpg/08/82/18/70/360_F_882187068_T8dUTH2GHdzo6YeCRHXbZX4EtTZ94qnN.jpg",
+          pageName: "Gospelmusic.html",
+        },
+        {
+          id: 24,
+          title: "Craft Beer Festival",
+          date: "2023-11-10",
+          venue: "Brewery",
+          type: "festival",
+          details: "Sample local craft beers and food pairings.",
+          image:
+            "https://media.istockphoto.com/id/157505356/photo/beer-at-beer-fest-in-munich-germany.jpg?s=612x612&w=0&k=20&c=e_2kJhkcC9TeutcFoKhag35x0xy7ftMFwG03G3VMwuE=",
+          pageName: "Craftbeer.html",
+        },
+        {
+          id: 25,
+          title: "Folk Music Night",
+          date: "2023-10-25",
+          venue: "Outdoor Amphitheater",
+          type: "concert",
+          details: "Enjoy an evening of folk music.",
+          image:
+            "https://c1.wallpaperflare.com/preview/536/248/47/folk-guitar-po-instrument.jpg",
+          pageName: "musicnight.html",
+        },
+        {
+          id: 26,
+          title: "Environmental Art Exhibition",
+          date: "2023-09-05",
+          venue: "Nature Center",
+          type: "exhibition",
+          details: "Explore art that reflects the environment.",
+          image:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCcx7PWK_mcWhVD_hpyPVQVFQv4AN9DH0DAQ&s",
+          pageName: "Environmentalartexhibition.html",
+        },
+        {
+          id: 27,
+          title: "International Film Festival",
+          date: "2023-08-10",
+          venue: "Film Theatre",
+          type: "festival",
+          details: "Watch films from around the world.",
+          image:
+            "https://media.gettyimages.com/id/497756864/video/night-scenery-of-busan-cinema-center.jpg?s=640x640&k=20&c=lrjgpPzYWTjh-8cwLlM2GigjtlHbMr1iilkKVMkaPl0=",
+          pageName: "internationalfilm.html",
+        },
+        {
+          id: 28,
+          title: "Rock and Roll Night",
+          date: "2023-07-15",
+          venue: "Live Music Venue",
+          type: "concert",
+          details: "Rock out to live music.",
+          image:
+            "https://wallpapers.com/images/hd/rock-n-roll-fgr59a5j7ol94pxf.jpg",
+          pageName: "Rockandroll.html",
+        },
+        {
+          id: 29,
+          title: "Children’s Art Workshop",
+          date: "2023-06-30",
+          venue: "Community Center",
+          type: "exhibition",
+          details: "A fun workshop for kids to explore art.",
+          image:
+            "https://img.freepik.com/premium-photo/colorful-childrens-art-class-action_952286-20901.jpg",
+          pageName: "Childrenart.html",
+        },
+        {
+          id: 30,
+          title: "Traditional Dance Festival",
+          date: "2023-05-05",
+          venue: "Cultural Center",
+          type: "festival",
+          details: "Experience traditional dances from around the world.",
+          image:
+            "https://img.freepik.com/premium-photo/colorful-dance-festival-celebrates-cultural-heritage-together_1079150-179465.jpg",
+          pageName: "traditionaldance.html",
+        },
+      ];
+
+      let filteredEvents = [...events];
+
+      function displayEvents() {
+        const eventList = document.getElementById("event-list");
+        eventList.innerHTML = "";
+
+        filteredEvents.forEach((event) => {
+          const card = document.createElement("div");
+          card.classList.add("event-card");
+          card.innerHTML = `
+                <img src="${event.image}" alt="${event.title}" class="event-image">
+                <div class="event-details">
+                    <div class="event-title">${event.title}</div>
+                    <div class="event-date">${event.date}</div>
+                    <div class="event-venue">${event.venue}</div>
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="quick-view" onclick="openModal(${event.id})">Quick View</div>
+                        </div>
+                      <div class="col-6">
+                        <button class="view-more btn btn-primary" style="border-radius: 15px" onclick="window.location.href='${event.pageName}'">View More</button>
+                        </div>
+
+                      </div>
+                    
+                    
+                </div>
+            `;
+          eventList.appendChild(card);
+        });
+      }
+
+      function openModal(id) {
+        const event = events.find((e) => e.id === id);
+        document.getElementById("modal-title").innerText = event.title;
+        document.getElementById("modal-image").src = event.image;
+        document.getElementById("modal-details").innerText = event.details;
+        document.getElementById("modal").style.display = "flex";
+      }
+
+      function closeModal() {
+        document.getElementById("modal").style.display = "none";
+      }
+
+      function filterAndSortEvents() {
+        const searchValue = document
+          .getElementById("search")
+          .value.toLowerCase();
+        const eventType = document.getElementById("event-type").value;
+        const sortBy = document.getElementById("sort-options").value;
+
+        filteredEvents = events.filter((event) => {
+          const matchesSearch = event.title.toLowerCase().includes(searchValue);
+          const matchesType = eventType ? event.type === eventType : true;
+          return matchesSearch && matchesType;
+        });
+
+        if (sortBy === "soonest") {
+          filteredEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
+        } else if (sortBy === "popular") {
+          // Assume we have some popularity metric (for demo purposes, we won't implement this).
+          // filteredEvents.sort((a, b) => b.popularity - a.popularity);
+        }
+
+        displayEvents();
+      }
+
+      document
+        .getElementById("search")
+        .addEventListener("input", filterAndSortEvents);
+      document
+        .getElementById("event-type")
+        .addEventListener("change", filterAndSortEvents);
+      document
+        .getElementById("sort-options")
+        .addEventListener("change", filterAndSortEvents);
+
+      // Initialize the display
+      displayEvents();
+    </script>
+  </body>
+</html>

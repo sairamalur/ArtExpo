@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog and Insights</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!-- Custom CSS -->
+    <style>
+      /* Custom Font Styles */
+      body {
+        font-family: "Lora", serif; /* Elegant serif font */
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        overflow-x: hidden;
+      }
+
+      h1,
+      h2,
+      h3,
+      h5 {
+        font-family: "Merriweather", serif; /* Serif font for headings */
+        font-weight: 700;
+        color: var(--primary-color);
+      }
+
+      p,
+      .card-text {
+        font-family: "Lora", serif; /* Lora for paragraphs and card text */
+        font-weight: 400;
+        line-height: 1.6;
+      }
+
+      /* Button Styling */
+      .btn {
+        font-family: "Poppins", sans-serif; /* Modern sans-serif for buttons */
+        font-weight: 600;
+      }
+
+      .comment-author {
+        font-family: "Roboto", sans-serif; /* Use 'Roboto' for comments */
+        font-weight: 500;
+        color: var(--primary-color);
+      }
+
+      .comment-text {
+        font-family: "Lora", serif;
+        color: var(--muted-color);
+      }
+
+      /* Hero Section */
+      .hero-section {
+        position: relative; /* Ensure positioning context for the pseudo-element */
+        background-image: url("https://img.freepik.com/free-photo/front-view-man-holding-ballot_23-2148265570.jpg?t=st=1732856478~exp=1732860078~hmac=38ce9de2cf351eedcf1d6ef3b884dfe822f920f245c2581a4c46b6f64f8db050&w=740");
+        background-size: cover; /* Cover the entire section */
+        background-position: center; /* Center the background image */
+        background-repeat: no-repeat; /* Do not repeat the image */
+        color: rgb(78, 42, 1);
+        padding: calc(var(--spacing-unit) * 3) var(--spacing-unit);
+        text-align: center;
+        margin-bottom: calc(var(--spacing-unit) * 2);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0.9; /* Set opacity of the hero section */
+        height: 400px; /* Set a fixed height, or adjust as needed */
+        clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+      }
+
+      .hero-section::before {
+        content: ""; /* Empty content to create the pseudo-element */
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: inherit; /* Inherit background from .hero-section */
+        filter: blur(8px); /* Apply the blur effect */
+        z-index: -1; /* Ensure the pseudo-element is behind the text */
+      }
+
+      /* Title Text Style */
+      .hero-section h1 {
+        font-family: var(--success-color);
+        font-size: clamp(1.5rem, 4vw, 2.5rem);
+        font-weight: 700;
+        margin-bottom: calc(var(--spacing-unit) * 0.5);
+        z-index: 1; /* Ensure the text stays above the blurred background */
+      }
+
+      /* Paragraph Text Style */
+      .hero-section p {
+        font-size: clamp(1rem, 2vw, 1.25rem);
+        opacity: 0.9;
+        z-index: 1; /* Ensure the paragraph text stays above the blurred background */
+      }
+
+      /* Category Buttons */
+      .categories .category-btn {
+        font-family: "Poppins", sans-serif; /* Modern, clean font for buttons */
+      }
+
+      :root {
+        --primary-color: #5e60ce;
+        --secondary-color: #ff7a59;
+        --bg-color: #f3f4f6;
+        --card-bg: #fff;
+        --text-color: #333;
+        --muted-color: #777;
+      }
+
+      .hero-section .btn {
+        background: white;
+        color: var(--primary-color);
+        font-weight: 600;
+        padding: 12px 30px;
+        border-radius: 50px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .hero-section .btn:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Featured Articles */
+      .featured-articles {
+        padding: 50px 0;
+      }
+
+      .card {
+        border: none;
+        background: var(--card-bg);
+        border-radius: 15px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .card img {
+        border-radius: 15px 15px 0 0;
+        height: 200px;
+        object-fit: cover;
+      }
+
+      .card-title {
+        color: var(--primary-color);
+      }
+
+      /* Categories Section */
+      .categories {
+        padding: 30px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 50px;
+      }
+
+      .categories h3 {
+        color: var(--primary-color);
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .categories .category-btn {
+        background-color: var(--primary-color);
+        color: white;
+        border-radius: 50px;
+        padding: 10px 20px;
+        margin: 10px;
+        font-weight: 600;
+        border: none;
+        text-transform: capitalize;
+        transition: all 0.3s ease;
+      }
+
+      .categories .category-btn:hover {
+        background-color: var(--secondary-color);
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Comments Section */
+      .comments-section {
+        background: var(--card-bg);
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .comments-section h3 {
+        color: var(--primary-color);
+        font-weight: 700;
+        margin-bottom: 20px;
+      }
+
+      .comment-input {
+        resize: none;
+        border-radius: 10px;
+      }
+
+      .comment {
+        padding: 15px 0;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .comment:last-child {
+        border-bottom: none;
+      }
+
+      .comment-author {
+        font-weight: 600;
+        color: var(--primary-color);
+      }
+
+      .comment-text {
+        color: var(--muted-color);
+        margin-top: 5px;
+      }
+      .navbar {
+        background: linear-gradient(45deg, #216cdd, #ae44593d);
+        width: 100%;
+      }
+
+      .dropdown-menu {
+        background: linear-gradient(45deg, #216cdd, #ae44593d);
+
+        color: white;
+      }
+
+      .nav-link {
+        position: relative;
+        left: 15px;
+      }
+
+      .navbar-brand {
+        color: #fff !important;
+        /* White text for brand name */
+        font-size: 1.5rem;
+      }
+
+      .navbar-nav .nav-link {
+        color: #fff !important;
+        /* White text for nav links */
+        font-size: 1.1rem;
+      }
+
+      .navbar-nav .nav-link:hover {
+        color: #ffd700 !important;
+        /* Gold color on hover */
+      }
+
+      .navbar-toggler-icon {
+        background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"%3E%3Cpath stroke="%23fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"/%3E%3C/svg%3E');
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">
+          <b>ArtExpo</b>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">HOME</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Categories
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item" href="contact.html">Contact</a>
+                </li>
+                <li><a class="dropdown-item" href="Faq.html">FAQ</a></li>
+                <li>
+                  <a class="dropdown-item" href="dashboard.html">Dashbord</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="art.html">Art Gallery</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="culture.html">Cultural Events </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="user.html">User</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="submit.html">Submit</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="review.html">Review</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="blog.html">Blog</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="container">
+        <h1>Welcome to Our Blog</h1>
+        <p>Discover the latest in art, culture, and education.</p>
+        <a href="#featured-articles" class="btn">Explore Articles</a>
+      </div>
+    </section>
+
+    <!-- Featured Articles Section -->
+    <section id="featured-articles" class="featured-articles text-center">
+      <div class="container">
+        <h2 class="text-center mb-5">Featured Articles</h2>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="card">
+              <img
+                src="https://img.freepik.com/free-photo/man-painting-home_23-2148017529.jpg?t=st=1732870612~exp=1732874212~hmac=a1865c67ae0c31cabc9a067d20c461657a0df2f6f49c8b894ae61d9ae1ed6bde&w=740"
+                alt="Art Techniques"
+                class="card-img-top"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Mastering Art Techniques</h5>
+                <p class="card-text">
+                  Learn the secrets behind stunning masterpieces.
+                </p>
+                <a href="bb1.html" class="btn btn-primary">Read More</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card">
+              <img
+                src="https://img.freepik.com/premium-photo/puppets-nepal_480416-542.jpg?w=740"
+                alt="Cultural Insights"
+                class="card-img-top"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Exploring Cultural Heritage</h5>
+                <p class="card-text">
+                  Dive into the richness of traditions and culture.
+                </p>
+                <a href="bb2.html" class="btn btn-primary">Read More</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card">
+              <img
+                src="https://img.freepik.com/free-photo/glance-path-lies-garlands-made-threads-with-chrysanthemum-buds_1304-3347.jpg?uid=R152529470&ga=GA1.1.806043227.1728279144&semt=ais_hybrid"
+                alt="Events"
+                class="card-img-top"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Events Around You</h5>
+                <p class="card-text">Stay updated with upcoming art events.</p>
+                <a href="bb3.html" class="btn btn-primary">Read More</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories container">
+      <h3>Browse by Category</h3>
+      <div class="d-flex justify-content-center flex-wrap">
+        <button
+          class="category-btn"
+          data-bs-toggle="modal"
+          data-bs-target="#artTechniquesModal"
+        >
+          Art Techniques
+        </button>
+        <button
+          class="category-btn"
+          data-bs-toggle="modal"
+          data-bs-target="#cultureModal"
+        >
+          Culture
+        </button>
+        <button
+          class="category-btn"
+          data-bs-toggle="modal"
+          data-bs-target="#artistInterviewsModal"
+        >
+          Artist Interviews
+        </button>
+        <button
+          class="category-btn"
+          data-bs-toggle="modal"
+          data-bs-target="#eventsModal"
+        >
+          Events
+        </button>
+        <button
+          class="category-btn"
+          data-bs-toggle="modal"
+          data-bs-target="#industryNewsModal"
+        >
+          Industry News
+        </button>
+      </div>
+    </section>
+
+    <!-- Modals -->
+    <!-- Art Techniques Modal -->
+    <div
+      class="modal fade"
+      id="artTechniquesModal"
+      tabindex="-1"
+      aria-labelledby="artTechniquesLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="artTechniquesLabel">Art Techniques</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <img
+              src="https://img.freepik.com/free-photo/man-painting-home_23-2148017529.jpg?w=740"
+              alt="Art Techniques"
+              class="img-fluid rounded mb-3"
+            />
+            <p>
+              Master the secrets of art with proven techniques that unlock your
+              creative potential. From brush strokes to digital artistry,
+              explore how you can elevate your skills.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Culture Modal -->
+    <div
+      class="modal fade"
+      id="cultureModal"
+      tabindex="-1"
+      aria-labelledby="cultureLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="cultureLabel">Culture</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <img
+              src="https://img.freepik.com/premium-photo/puppets-nepal_480416-542.jpg?w=740"
+              alt="Culture"
+              class="img-fluid rounded mb-3"
+            />
+            <p>
+              Experience the vibrancy of cultural heritage. Discover traditional
+              art, rituals, and the stories that connect us to our roots.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Artist Interviews Modal -->
+    <div
+      class="modal fade"
+      id="artistInterviewsModal"
+      tabindex="-1"
+      aria-labelledby="artistInterviewsLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="artistInterviewsLabel">
+              Artist Interviews
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <img
+              src="https://img.freepik.com/free-photo/artist-painting-canvas_1098-18082.jpg?w=740"
+              alt="Artist Interviews"
+              class="img-fluid rounded mb-3"
+            />
+            <p>
+              Get inspired by insights from top artists around the globe. Learn
+              about their journeys, challenges, and creative processes.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Events Modal -->
+    <div
+      class="modal fade"
+      id="eventsModal"
+      tabindex="-1"
+      aria-labelledby="eventsLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="eventsLabel">Events</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <img
+              src="https://img.freepik.com/free-photo/glance-path-lies-garlands-made-threads-with-chrysanthemum-buds_1304-3347.jpg?w=740"
+              alt="Events"
+              class="img-fluid rounded mb-3"
+            />
+            <p>
+              Never miss out on art exhibitions, cultural festivals, and
+              creative workshops happening near you.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Industry News Modal -->
+    <div
+      class="modal fade"
+      id="industryNewsModal"
+      tabindex="-1"
+      aria-labelledby="industryNewsLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="industryNewsLabel">Industry News</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <img
+              src="https://img.freepik.com/free-photo/news-headline-information-media-publication-concept_53876-120154.jpg?w=740"
+              alt="Industry News"
+              class="img-fluid rounded mb-3"
+            />
+            <p>
+              Stay updated on the latest trends, innovations, and announcements
+              in the world of art and culture.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Comments Section -->
+    <section class="comments-section container">
+      <h3>Join the Conversation</h3>
+      <textarea
+        id="commentInput"
+        class="form-control comment-input mb-3"
+        rows="3"
+        placeholder="Write your comment..."
+      ></textarea>
+      <button id="postComment" class="btn btn-primary w-100">
+        Post Comment
+      </button>
+      <div id="commentsContainer" class="mt-4"></div>
+    </section>
+    <footer class="footer py-3 text-white text-center bg-black mt-3">
+      <p class="mb-0">
+        &copy; 2024 Mastering Art Techniques. All Rights Reserved.
+      </p>
+    </footer>
+    <!-- JavaScript -->
+    <script>
+      document.getElementById("postComment").addEventListener("click", () => {
+        const input = document.getElementById("commentInput");
+        const container = document.getElementById("commentsContainer");
+        if (input.value.trim()) {
+          const comment = `
+                    <div class="comment">
+                        <div class="comment-author">User:</div>
+                        <div class="comment-text">${input.value}</div>
+                    </div>`;
+          container.innerHTML = comment + container.innerHTML;
+          input.value = "";
+        }
+      });
+    </script>
+  </body>
+</html>

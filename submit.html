@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Artwork/Event Submission & Approval System</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+   
+    <style>
+      /* Add this CSS in your <style> tag or external CSS file */
+
+      /* Base styles and variables */
+      :root {
+        --primary-color: #007bff;
+        --secondary-color: #6c757d;
+        --success-color: #28a745;
+        --danger-color: #dc3545;
+        --warning-color: #ffc107;
+        --info-color: #17a2b8;
+        --light-color: #f8f9fa;
+        --dark-color: #343a40;
+        --font-primary: "Poppins", sans-serif;
+        --font-secondary: "Open Sans", sans-serif;
+        --spacing-unit: 1rem;
+      }
+
+      /* Import Google Fonts */
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap");
+
+      /* General Styles */
+      body {
+        font-family: var(--font-primary);
+        background-color: #f4f7f6;
+        color: var(--dark-color);
+        line-height: 1.6;
+      }
+
+      /* Typography */
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: var(--font-primary);
+        font-weight: 600;
+        margin-bottom: var(--spacing-unit);
+      }
+
+      p {
+        font-family: var(--font-secondary);
+        margin-bottom: var(--spacing-unit);
+      }
+
+      /* Hero Section */
+      .hero-section {
+        position: relative; /* Ensure positioning context for the pseudo-element */
+        background-image: url("https://img.freepik.com/free-photo/front-view-man-holding-ballot_23-2148265570.jpg?t=st=1732856478~exp=1732860078~hmac=38ce9de2cf351eedcf1d6ef3b884dfe822f920f245c2581a4c46b6f64f8db050&w=740");
+        background-size: cover; /* Cover the entire section */
+        background-position: center; /* Center the background image */
+        background-repeat: no-repeat; /* Do not repeat the image */
+        color: rgb(78, 42, 1);
+        padding: calc(var(--spacing-unit) * 3) var(--spacing-unit);
+        text-align: center;
+        margin-bottom: calc(var(--spacing-unit) * 2);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0.9; /* Set opacity of the hero section */
+        height: 300px; /* Set a fixed height, or adjust as needed */
+      }
+
+      /* Adding a pseudo-element to blur the background */
+      .hero-section::before {
+        content: ""; /* Empty content to create the pseudo-element */
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: inherit; /* Inherit background from .hero-section */
+        filter: blur(8px); /* Apply the blur effect */
+        z-index: -1; /* Ensure the pseudo-element is behind the text */
+      }
+
+      /* Title Text Style */
+      .hero-section h1 {
+        font-family: var(--success-color);
+        font-size: clamp(1.5rem, 4vw, 2.5rem);
+        font-weight: 700;
+        margin-bottom: calc(var(--spacing-unit) * 0.5);
+        z-index: 1; /* Ensure the text stays above the blurred background */
+      }
+
+      /* Paragraph Text Style */
+      .hero-section p {
+        font-size: clamp(1rem, 2vw, 1.25rem);
+        opacity: 0.9;
+        z-index: 1; /* Ensure the paragraph text stays above the blurred background */
+      }
+
+      /* Cards and Containers */
+      .container {
+        padding: calc(var(--spacing-unit) * 2) var(--spacing-unit);
+        max-width: 100%;
+        margin: 0 auto;
+      }
+
+      .submission-card {
+        transition: all 0.3s ease;
+        margin-bottom: calc(var(--spacing-unit) * 1.5);
+        border-radius: 8px;
+        overflow: hidden;
+        background: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+
+      .submission-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-body {
+        padding: calc(var(--spacing-unit) * 1.5);
+      }
+
+      /* Status Styles */
+      .status-pending {
+        background-color: #fff3cd;
+        border-left: 4px solid var(--warning-color);
+      }
+
+      .status-approved {
+        background-color: #d4edda;
+        border-left: 4px solid var(--success-color);
+      }
+
+      .status-rejected {
+        background-color: #f8d7da;
+        border-left: 4px solid var(--danger-color);
+      }
+
+      /* Badges */
+      .badge {
+        font-size: 0.85rem;
+        padding: 0.35em 0.65em;
+        font-weight: 500;
+      }
+
+      /* Buttons */
+      .btn {
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+      }
+
+      .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+        transform: translateY(-2px);
+      }
+
+      /* Modal Styles */
+      .modal-content {
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      .modal-header {
+        padding: calc(var(--spacing-unit) * 1.5);
+        background: var(--primary-color);
+        color: white;
+      }
+
+      .modal-body {
+        padding: calc(var(--spacing-unit) * 2);
+      }
+
+      .modal-footer {
+        padding: calc(var(--spacing-unit) * 1.5);
+        border-top: 1px solid #dee2e6;
+      }
+
+      /* Form Styles */
+      .form-label {
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: var(--dark-color);
+      }
+
+      .form-control {
+        padding: 0.75rem;
+        border-radius: 6px;
+        border: 1px solid #ced4da;
+        transition: border-color 0.3s ease;
+      }
+
+      .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+      }
+
+      /* Image Preview Styles */
+      .image-preview {
+        max-width: 200px;
+        max-height: 200px;
+        object-fit: cover;
+        margin: 10px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .details-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Dashboard Heading Styling */
+      .dashboard-heading {
+        font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+          sans-serif;
+        text-align: center; /* Center the heading */
+        margin-bottom: var(--spacing-unit); /* Spacing below the heading */
+        font-size: clamp(1.5rem, 2vw + 1rem, 2.5rem); /* Responsive font size */
+        font-weight: 600; /* Semi-bold font weight */
+        color: var(--primary-color); /* Primary color */
+      }
+
+      /* Dashboard Stats Section */
+      .dashboard-stats {
+        display: flex; /* Use flexbox for layout */
+        justify-content: space-around; /* Space out items evenly */
+        margin: 2rem 0; /* Margin above and below the dashboard stats */
+      }
+
+      /* Stat Item Styling */
+      .stat-item {
+        background-color: yellow; /* Light background for each stat item */
+        border-radius: 8px; /* Rounded corners */
+        padding: var(--spacing-unit); /* Padding inside each item */
+        text-align: center; /* Center text inside the item */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        flex: 1; /* Flex-grow to fill space */
+        margin: 0 10px; /* Margin to separate items */
+        transition: transform 0.2s; /* Animation for hover effect */
+      }
+
+      .stat-item:hover {
+        transform: translateY(-3px); /* Lift effect on hover */
+      }
+
+      /* Stat Number and Label Styling */
+      .stat-number {
+        font-size: 2rem; /* Large font for the number */
+        font-weight: 700; /* Bold */
+        color: white;
+      }
+
+      .stat-label {
+        font-size: 1rem; /* Smaller font for the label */
+        color: white; /* Secondary color for labels */
+      }
+
+      /* Responsive Design */
+      @media (min-width: 320px) {
+        .container {
+          padding: var(--spacing-unit);
+        }
+
+        .card-body {
+          padding: var(--spacing-unit);
+        }
+
+        .btn {
+          padding: 0.4rem 0.8rem;
+          font-size: 0.9rem;
+        }
+      }
+
+      @media (min-width: 768px) {
+        .container {
+          padding: calc(var(--spacing-unit) * 2);
+        }
+
+        .card-body {
+          padding: calc(var(--spacing-unit) * 1.5);
+        }
+
+        .btn {
+          padding: 0.5rem 1rem;
+          font-size: 1rem;
+        }
+      }
+
+      @media (min-width: 1200px) {
+        .container {
+          max-width: 1140px;
+          margin: 0 auto;
+        }
+      }
+
+      @media (min-width: 1400px) {
+        .container {
+          max-width: 1320px;
+        }
+      }
+
+      @media (min-width: 1920px) {
+        .container {
+          max-width: 1600px;
+        }
+
+        html {
+          font-size: 18px;
+        }
+      }
+
+      @media (min-width: 2560px) {
+        .container {
+          max-width: 2000px;
+        }
+
+        html {
+          font-size: 20px;
+        }
+      }
+
+      /* Dashboard Stats */
+      .dashboard-stats {
+        display: grid;
+        gap: var(--spacing-unit);
+        margin-bottom: calc(var(--spacing-unit) * 2);
+      }
+
+      @media (min-width: 768px) {
+        .dashboard-stats {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      /* Utility Classes */
+      .mb-1 {
+        margin-bottom: calc(var(--spacing-unit) * 0.25);
+      }
+      .mb-2 {
+        margin-bottom: calc(var(--spacing-unit) * 0.5);
+      }
+      .mb-3 {
+        margin-bottom: var(--spacing-unit);
+      }
+      .mb-4 {
+        margin-bottom: calc(var(--spacing-unit) * 1.5);
+      }
+      .mb-5 {
+        margin-bottom: calc(var(--spacing-unit) * 3);
+      }
+
+      .mt-1 {
+        margin-top: calc(var(--spacing-unit) * 0.25);
+      }
+      .mt-2 {
+        margin-top: calc(var(--spacing-unit) * 0.5);
+      }
+      .mt-3 {
+        margin-top: var(--spacing-unit);
+      }
+      .mt-4 {
+        margin-top: calc(var(--spacing-unit) * 1.5);
+      }
+      .mt-5 {
+        margin-top: calc(var(--spacing-unit) * 3);
+      }
+
+      /* Animation */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .submission-card {
+        animation: fadeIn 0.3s ease-out;
+      }
+      .navbar {
+        background: linear-gradient(45deg, #216cdd, #ae44593d);
+        width: 100%;
+      }
+
+      .dropdown-menu {
+        background: linear-gradient(45deg, #216cdd, #ae44593d);
+
+        color: white;
+      }
+
+      .nav-link {
+        position: relative;
+        left: 15px;
+      }
+
+      .navbar-brand {
+        color: #fff !important;
+        /* White text for brand name */
+        font-size: 1.5rem;
+      }
+
+      .navbar-nav .nav-link {
+        color: #fff !important;
+        /* White text for nav links */
+        font-size: 1.1rem;
+      }
+
+      .navbar-nav .nav-link:hover {
+        color: #ffd700 !important;
+        /* Gold color on hover */
+      }
+
+      .navbar-toggler-icon {
+        background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"%3E%3Cpath stroke="%23fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"/%3E%3C/svg%3E');
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">
+          <b>Couponify</b>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">HOME</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Categories
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item" href="contact.html">Contact</a>
+                </li>
+                <li><a class="dropdown-item" href="Faq.html">FAQ</a></li>
+                <li>
+                  <a class="dropdown-item" href="dashboard.html">Dashbord</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="art.html">Art Gallery</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="culture.html">Cultural Events </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="user.html">User</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="submit.html">Submit</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="review.html">Review</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="blog.html">Blog</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Hero Section -->
+    <div style="min-height: 100vh">
+      <div class="hero-section">
+        <h1>Event Submission & Approval System</h1>
+      </div>
+
+      <!-- Guidelines Modal -->
+      <div class="modal fade" id="guidelinesModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Guidelines and Policies</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <p>
+                Please ensure your submissions adhere to our quality and
+                compliance standards. All submissions are subject to review.
+              </p>
+              <ul>
+                <li>Ensure all fields are filled accurately.</li>
+                <li>Upload only valid image files.</li>
+                <li>Provide a clear and concise description.</li>
+              </ul>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                id="acceptGuidelinesBtn"
+              >
+                Accept and Proceed
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submission Form Modal -->
+      <div class="modal fade" id="submissionModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+              <h5 class="modal-title">Submit Artwork/Event</h5>
+              <button
+                type="button"
+                class="btn-close btn-close-white"
+                data-bs-dismiss="modal"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form id="submissionForm" novalidate>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Title</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="submissionTitle"
+                      required
+                    />
+                    <div class="invalid-feedback">Please enter a title.</div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Category</label>
+                    <select
+                      class="form-select"
+                      id="submissionCategory"
+                      required
+                    >
+                      <option value="">Select Category</option>
+                      <option value="Art Exhibition">Art Exhibition</option>
+                      <option value="Cultural Event">Cultural Event</option>
+                      <option value="Performance">Performance</option>
+                      <option value="Workshop">Workshop</option>
+                    </select>
+                    <div class="invalid-feedback">
+                      Please select a category.
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Description</label>
+                  <textarea
+                    class="form-control"
+                    id="submissionDescription"
+                    rows="4"
+                    required
+                  ></textarea>
+                  <div class="invalid-feedback">
+                    Please enter a description.
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Event Date</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="submissionDate"
+                      required
+                    />
+                    <div class="invalid-feedback">
+                      Please enter an event date.
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Contact Email</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="submissionEmail"
+                      required
+                    />
+                    <div class="invalid-feedback">
+                      Please enter a valid email.
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Upload Images</label>
+                  <input
+                    type="file"
+                    class="form-control"
+                    id="submissionImages"
+                    multiple
+                    accept="image/*"
+                    required
+                  />
+                  <div id="imagePreview" class="d-flex flex-wrap"></div>
+                  <div class="invalid-feedback">
+                    Please upload valid image files.
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancel
+              </button>
+              <button type="button" class="btn btn-primary" id="submitBtn">
+                Submit Artwork/Event
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Admin Review Dashboard -->
+      <div class="container py-5">
+        <h1 class="dashboard-heading">Submission Approval Dashboard</h1>
+        <div class="dashboard-stats">
+          <div class="stat-item bg-warning">
+            <div class="stat-number" id="pendingCount">0</div>
+            <div class="stat-label">Pending</div>
+          </div>
+          <div class="stat-item bg-success">
+            <div class="stat-number" id="approvedCount">0</div>
+            <div class="stat-label">Approved</div>
+          </div>
+          <div class="stat-item bg-danger">
+            <div class="stat-number" id="rejectedCount">0</div>
+            <div class="stat-label">Rejected</div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between mb-3">
+          <button
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#guidelinesModal"
+          >
+            + New Submission
+          </button>
+        </div>
+        <div id="submissionsList">
+          <!-- Submissions will be dynamically added here -->
+        </div>
+      </div>
+
+      <!-- Submission Details Modal -->
+      <div class="modal fade" id="submissionDetailsModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Submission Details</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+              ></button>
+            </div>
+            <div class="modal-body" id="submissionDetailsContent">
+              <!-- Details will be dynamically populated -->
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-success"
+                id="approveSubmissionBtn"
+              >
+                Approve
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger"
+                id="rejectSubmissionBtn"
+              >
+                Reject
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer py-3 text-white text-center bg-black">
+      <p class="mb-0">
+        &copy; 2024 Mastering Art Techniques. All Rights Reserved.
+      </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const today = new Date().toISOString().split("T")[0];
+          document.getElementById("submissionDate").setAttribute("min", today);
+        });
+      
+        class SubmissionManager {
+          constructor() {
+            this.submissions =
+              JSON.parse(localStorage.getItem("submissions")) || [];
+          }
+      
+          addSubmission(submission) {
+            submission.id = Date.now();
+            submission.status = "pending";
+      
+            if (submission.images && submission.images.length > 0) {
+              submission.imageUrls = Array.from(submission.images).map((img) =>
+                URL.createObjectURL(img)
+              );
+            }
+      
+            this.submissions.push(submission);
+            this.saveSubmissions();
+            this.renderSubmissions();
+          }
+      
+          saveSubmissions() {
+            localStorage.setItem("submissions", JSON.stringify(this.submissions));
+          }
+      
+          renderSubmissions() {
+            const submissionsList = document.getElementById("submissionsList");
+            submissionsList.innerHTML = "";
+      
+            const statusCounts = {
+              pending: 0,
+              approved: 0,
+              rejected: 0,
+            };
+      
+            this.submissions.forEach((submission) => {
+              statusCounts[submission.status]++;
+      
+              const card = document.createElement("div");
+              card.classList.add(
+                "card",
+                "submission-card",
+                `status-${submission.status}`
+              );
+              card.innerHTML = `
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="card-title">${submission.title}</h5>
+                        <span class="badge bg-${this.getStatusColor(
+                          submission.status
+                        )}">${submission.status.toUpperCase()}</span>
+                    </div>
+                    <p class="card-text">${submission.description.substring(
+                      0,
+                      100
+                    )}...</p>
+                    <div class="d-flex justify-content-between">
+                        <small class="text-muted">${submission.category}</small>
+                        <div>
+                            <button class="btn btn-sm btn-info view-details mt-2" data-id="${
+                              submission.id
+                            }">View Details</button>
+                            <button class="btn btn-sm btn-danger delete-submission mt-2" data-id="${
+                              submission.id
+                            }">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+              submissionsList.appendChild(card);
+            });
+      
+            document.getElementById("pendingCount").textContent =
+              statusCounts.pending;
+            document.getElementById("approvedCount").textContent =
+              statusCounts.approved;
+            document.getElementById("rejectedCount").textContent =
+              statusCounts.rejected;
+      
+            this.attachViewDetailsListeners();
+            this.attachDeleteListeners();
+          }
+      
+          getStatusColor(status) {
+            const statusColors = {
+              pending: "warning",
+              approved: "success",
+              rejected: "danger",
+            };
+            return statusColors[status];
+          }
+      
+          attachViewDetailsListeners() {
+            document.querySelectorAll(".view-details").forEach((btn) => {
+              btn.addEventListener("click", (e) => {
+                const submissionId = parseInt(e.target.dataset.id);
+                const submission = this.submissions.find(
+                  (s) => s.id === submissionId
+                );
+                this.showSubmissionDetails(submission);
+              });
+            });
+          }
+      
+          attachDeleteListeners() {
+            document.querySelectorAll(".delete-submission").forEach((btn) => {
+              btn.addEventListener("click", (e) => {
+                const submissionId = parseInt(e.target.dataset.id);
+                this.deleteSubmission(submissionId);
+              });
+            });
+          }
+      
+          showSubmissionDetails(submission) {
+            const detailsModal = new bootstrap.Modal(
+              document.getElementById("submissionDetailsModal")
+            );
+            const detailsContent = document.getElementById(
+              "submissionDetailsContent"
+            );
+      
+            const imagePreviewsHtml = submission.imageUrls
+              ? submission.imageUrls
+                  .map((url) => `<img src="${url}" class="details-image">`)
+                  .join("")
+              : "No images uploaded";
+      
+            detailsContent.innerHTML = `
+              <h4>${submission.title}</h4>
+              <p><strong>Category:</strong> ${submission.category}</p>
+              <p><strong>Description:</strong> ${submission.description}</p>
+              <p><strong>Date:</strong> ${submission.date}</p>
+              <p><strong>Contact Email:</strong> ${submission.email}</p>
+              <p><strong>Current Status:</strong> ${submission.status.toUpperCase()}</p>
+              <div class="mt-3">
+                  <strong>Images:</strong>
+                  <div class="d-flex flex-wrap">
+                      ${imagePreviewsHtml}
+                  </div>
+              </div>
+          `;
+      
+            document.getElementById("approveSubmissionBtn").onclick = () =>
+              this.updateSubmissionStatus(submission.id, "approved");
+            document.getElementById("rejectSubmissionBtn").onclick = () =>
+              this.updateSubmissionStatus(submission.id, "rejected");
+      
+            detailsModal.show();
+          }
+      
+          updateSubmissionStatus(id, status) {
+            const submissionIndex = this.submissions.findIndex(
+              (s) => s.id === id
+            );
+            if (submissionIndex !== -1) {
+              this.submissions[submissionIndex].status = status;
+              this.saveSubmissions();
+              this.renderSubmissions();
+              bootstrap.Modal.getInstance(
+                document.getElementById("submissionDetailsModal")
+              ).hide();
+            }
+          }
+      
+          deleteSubmission(id) {
+            const confirmation = confirm(
+              "Are you sure you want to delete this submission?"
+            );
+            if (confirmation) {
+              this.submissions = this.submissions.filter(
+                (submission) => submission.id !== id
+              );
+              this.saveSubmissions();
+              this.renderSubmissions();
+            }
+          }
+        }
+      
+        const submissionManager = new SubmissionManager();
+      
+        document
+          .getElementById("submissionImages")
+          .addEventListener("change", function (event) {
+            const imagePreview = document.getElementById("imagePreview");
+            imagePreview.innerHTML = "";
+      
+            const files = event.target.files;
+            for (let i = 0; i < files.length; i++) {
+              const file = files[i];
+              const img = document.createElement("img");
+              img.classList.add("image-preview", "me-2");
+              img.file = file;
+      
+              imagePreview.appendChild(img);
+      
+              const reader = new FileReader();
+              reader.onload = (function (aImg) {
+                return function (e) {
+                  aImg.src = e.target.result;
+                };
+              })(img);
+              reader.readAsDataURL(file);
+            }
+          });
+      
+        document
+          .getElementById("acceptGuidelinesBtn")
+          .addEventListener("click", () => {
+            const guidelinesModal = bootstrap.Modal.getInstance(
+              document.getElementById("guidelinesModal")
+            );
+            guidelinesModal.hide();
+      
+            const submissionModal = new bootstrap.Modal(
+              document.getElementById("submissionModal")
+            );
+            submissionModal.show();
+          });
+      
+        document.getElementById("submitBtn").addEventListener("click", () => {
+          const form = document.getElementById("submissionForm");
+      
+          if (!validateForm(form)) {
+            form.classList.add("was-validated");
+            return;
+          }
+      
+          const submission = {
+            title: document.getElementById("submissionTitle").value,
+            category: document.getElementById("submissionCategory").value,
+            description: document.getElementById("submissionDescription").value,
+            date: document.getElementById("submissionDate").value,
+            email: document.getElementById("submissionEmail").value,
+            images: document.getElementById("submissionImages").files,
+          };
+      
+          submissionManager.addSubmission(submission);
+      
+          const submissionModal = bootstrap.Modal.getInstance(
+            document.getElementById("submissionModal")
+          );
+          submissionModal.hide();
+      
+          form.classList.remove("was-validated");
+          form.reset();
+          document.getElementById("imagePreview").innerHTML = "";
+        });
+      
+        function validateForm(form) {
+          let isValid = true;
+      
+          const title = form.querySelector("#submissionTitle");
+          const category = form.querySelector("#submissionCategory");
+          const description = form.querySelector("#submissionDescription");
+          const date = form.querySelector("#submissionDate");
+          const email = form.querySelector("#submissionEmail");
+          const images = form.querySelector("#submissionImages");
+      
+          if (title.value.trim() === "") {
+            setError(title, "Please enter a title.");
+            isValid = false;
+          } else {
+            clearError(title);
+          }
+      
+          if (category.value === "") {
+            setError(category, "Please select a category.");
+            isValid = false;
+          } else {
+            clearError(category);
+          }
+      
+          if (description.value.trim() === "") {
+            setError(description, "Please enter a description.");
+            isValid = false;
+          } else {
+            clearError(description);
+          }
+      
+          if (date.value === "") {
+            setError(date, "Please enter an event date.");
+            isValid = false;
+          } else {
+            clearError(date);
+          }
+      
+          if (!validateEmail(email.value.trim())) {
+            setError(email, "Please enter a valid email.");
+            isValid = false;
+          } else {
+            clearError(email);
+          }
+      
+          if (images.files.length === 0) {
+            setError(images, "Please upload valid image files.");
+            isValid = false;
+          } else {
+            clearError(images);
+          }
+      
+          return isValid;
+        }
+      
+        function setError(element, message) {
+          const errorElement = element.nextElementSibling;
+          errorElement.textContent = message;
+          element.classList.add("is-invalid");
+        }
+      
+        function clearError(element) {
+          const errorElement = element.nextElementSibling;
+          errorElement.textContent = "";
+          element.classList.remove("is-invalid");
+        }
+      
+        function validateEmail(email) {
+          const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z-]+\.[a-zA-Z]{2,}$/;
+          return re.test(email);
+        }
+      
+        submissionManager.renderSubmissions();
+      </script>
+  </body>
+</html>

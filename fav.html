@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Favorite Artworks</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+      integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"
+      integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+      integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: radial-gradient(
+          circle,
+          rgba(238, 174, 202, 1) 0%,
+          rgba(148, 187, 233, 1) 100%
+        );
+        background-repeat: no-repeat;
+        overflow-x: hidden;
+      }
+      .artwork-card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* Ensures spacing between content and buttons */
+        text-align: center;
+        height: 100%; /* Ensure all cards stretch to the same height */
+      }
+      .artwork-card img {
+        max-width: 100%;
+        border-radius: 5px;
+        margin-bottom: 1rem;
+      }
+      .row > div {
+        display: flex; /* Make the columns flex containers */
+        align-items: stretch; /* Ensure cards stretch to the same height */
+      }
+      .navbar {
+        background: linear-gradient(45deg, #216cdd, #ae44593d);
+        width: 100%;
+      }
+
+      .dropdown-menu {
+        background: linear-gradient(45deg, #216cdd, #ae44593d);
+
+        color: white;
+      }
+
+      .nav-link {
+        position: relative;
+        left: 15px;
+      }
+
+      .navbar-brand {
+        color: #fff !important;
+        /* White text for brand name */
+        font-size: 1.5rem;
+      }
+
+      .navbar-nav .nav-link {
+        color: #fff !important;
+        /* White text for nav links */
+        font-size: 1.1rem;
+      }
+
+      .navbar-nav .nav-link:hover {
+        color: #ffd700 !important;
+        /* Gold color on hover */
+      }
+
+      .navbar-toggler-icon {
+        background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"%3E%3Cpath stroke="%23fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"/%3E%3C/svg%3E');
+      }
+
+      .class-img-top {
+        height: 200px;
+        /* min-width: 50%; */
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">
+          <b>ArtExpo</b>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">HOME</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Categories
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item" href="contact.html">Contact</a>
+                </li>
+                <li><a class="dropdown-item" href="Faq.html">FAQ</a></li>
+                <li>
+                  <a class="dropdown-item" href="dashboard.html">Dashbord</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="art.html">Art Gallery</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="culture.html">Cultural Events </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="user.html">User</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="submit.html">Submit</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="review.html">Review</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="blog.html">Blog</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container" style="min-height: 100vh">
+      <h1 class="mt-4">Favorite Artworks</h1>
+      <div id="favoriteArtworks" class="row"></div>
+    </div>
+    <footer class="footer py-3 text-white text-center bg-black">
+      <p class="mb-0">
+        &copy; 2024 Mastering Art Techniques. All Rights Reserved.
+      </p>
+    </footer>
+    <script>
+      function loadFavorites() {
+        const favoritesContainer = document.getElementById("favoriteArtworks");
+        const favoriteArtworks =
+          JSON.parse(localStorage.getItem("favoriteArtworks")) || [];
+
+        if (favoriteArtworks.length === 0) {
+          favoritesContainer.innerHTML = "<p>No favorite artworks found.</p>";
+          return;
+        }
+
+        favoriteArtworks.forEach((artwork, index) => {
+          const artworkDiv = document.createElement("div");
+          artworkDiv.className = "col-lg-4 col-md-6 col-sm-12 mt-2"; // Use Bootstrap column classes
+          artworkDiv.innerHTML = `
+                    <div class="artwork-card">
+                        <img src="${artwork.image}" alt="${artwork.title}" class="class-img-top">
+                        <h3>${artwork.title}</h3>
+                        <p>Artist: ${artwork.artist}</p>
+                        <p>Price: ${artwork.price}</p>
+                        <button class="btn btn-danger mt-auto" onclick="removeFavorite(${index})">Remove from Favorites</button>
+                    </div>
+                `;
+          favoritesContainer.appendChild(artworkDiv);
+        });
+      }
+
+      function removeFavorite(index) {
+        let favoriteArtworks =
+          JSON.parse(localStorage.getItem("favoriteArtworks")) || [];
+        favoriteArtworks.splice(index, 1); // Remove the selected artwork
+        localStorage.setItem(
+          "favoriteArtworks",
+          JSON.stringify(favoriteArtworks)
+        );
+        // Reload the favorites display
+        document.getElementById("favoriteArtworks").innerHTML = "";
+        loadFavorites();
+      }
+
+      // Load favorites on page load
+      window.onload = loadFavorites;
+    </script>
+  </body>
+</html>

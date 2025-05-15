@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our Mission</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"
+      integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+      integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      body {
+        background: radial-gradient(
+          circle,
+          rgba(238, 174, 202, 1) 0%,
+          rgba(148, 187, 233, 1) 100%
+        );
+        background-repeat: no-repeat;
+        overflow-x: hidden;
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        transition: transform 0.3s ease;
+      }
+
+      .content-section {
+        padding: 40px;
+        background-color: #ffffff;
+        animation: slideIn 1.5s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      h1 {
+        color: #333;
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      p {
+        color: #666;
+        line-height: 1.6;
+        text-align: justify;
+        margin-bottom: 20px;
+      }
+      .badge {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border-radius: 20px;
+        margin: 5px;
+        animation: bounce 1s infinite alternate;
+        transition: background-color 0.3s;
+      }
+      .badge:hover {
+        background-color: #0056b3;
+      }
+      .badges {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
+      @keyframes bounce {
+        from {
+          transform: translateY(0);
+        }
+        to {
+          transform: translateY(-10px);
+        }
+      }
+
+      .navbar {
+        background: linear-gradient(45deg, #216cdd, #ae44593d);
+        width: 100%;
+      }
+
+      .dropdown-menu {
+        background: linear-gradient(45deg, #216cdd, #ae44593d);
+
+        color: white;
+      }
+
+      .nav-link {
+        position: relative;
+        left: 15px;
+      }
+
+      .navbar-brand {
+        color: #fff !important;
+        /* White text for brand name */
+        font-size: 1.5rem;
+      }
+
+      .navbar-nav .nav-link {
+        color: #fff !important;
+        /* White text for nav links */
+        font-size: 1.1rem;
+      }
+
+      .navbar-nav .nav-link:hover {
+        color: #ffd700 !important;
+        /* Gold color on hover */
+      }
+
+      .navbar-toggler-icon {
+        background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"%3E%3Cpath stroke="%23fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"/%3E%3C/svg%3E');
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">
+          <b>ArtExpo</b>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">HOME</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Categories
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item" href="contact.html">Contact</a>
+                </li>
+                <li><a class="dropdown-item" href="Faq.html">FAQ</a></li>
+                <li>
+                  <a class="dropdown-item" href="dashboard.html">Dashbord</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="art.html">Art Gallery</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="culture.html">Cultural Events </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="user.html">User</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="submit.html">Submit</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="review.html">Review</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="blog.html">Blog</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <section style="min-height: 100vh">
+      <div class="container" style="margin-top: 20px">
+        <!-- <div class="image-section"></div> -->
+        <div class="row align-items-center">
+          <div class="col-md-4 align-items-center b-3">
+            <img
+              src="https://img.freepik.com/free-photo/dictatorship-concept-with-puppeteer_23-2149672833.jpg?t=st=1732867032~exp=1732870632~hmac=36ccb1c8f1c39cd0745670e8c202d4af42bae550a16b72f36e0a016b2e787426&w=360"
+              style="width: 200px"
+              alt="abc"
+            />
+          </div>
+          <div class="content-section col-md-8">
+            <h1>Our Mission</h1>
+            <p>
+              Arts and culture encompass the creative expressions, traditions,
+              and shared practices that define human societies, including music,
+              dance, theater, visual arts, literature, and more. Historical
+              Significance: They provide insights into the history of
+              civilizations, preserving the stories, values, and beliefs of
+              communities. Diversity: Arts and culture are diverse and
+              influenced by geography, religion, history, and social dynamics,
+              creating a rich tapestry of global heritage. Visual Arts:
+              Painting, sculpture, and photography are forms that capture
+              emotions, landscapes, and abstract concepts. Performing Arts:
+              Theater, music, and dance bring stories to life, blending
+              creativity and physical expression. Cultural Festivals: Events
+              like Carnival in Brazil or Diwali in India celebrate unique
+              traditions and foster community spirit. Literature: Poetry,
+              novels, and prose reflect the human experience and challenge
+              societal norms. Architecture: Structures like the Taj Mahal or the
+              Eiffel Tower stand as cultural icons and marvels of artistic
+              ingenuity. Impact on Identity: Arts and culture shape national and
+              individual identities, influencing how people view themselves and
+              others. Economic Role: Creative industries contribute
+              significantly to global economies, creating jobs and driving
+              tourism..
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer class="footer py-3 text-white text-center bg-black mt-5">
+      <p class="mb-0 text-white text-center">
+        &copy; 2024 Mastering Art Techniques. All Rights Reserved.
+      </p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Explore the richness of cultural heritage through stories, art, and traditions."
+    />
+    <title>Exploring Cultural Heritage</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* Hero Section */
+      .hero-section {
+        height: 100vh;
+        background: url("https://img.freepik.com/premium-photo/group-women-dressed-brightly-colored-clothing_662214-416551.jpg?w=740")
+          no-repeat center center/cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+      }
+
+      .hero-title {
+        font-family: "Georgia", serif;
+        font-size: 3rem;
+        z-index: 1;
+      }
+
+      .hero-subtitle {
+        font-style: italic;
+        z-index: 1;
+      }
+
+      /* Section Titles */
+      .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        position: relative;
+      }
+
+      .section-title::after {
+        content: "";
+        width: 80px;
+        height: 4px;
+        background-color: #ff6f61;
+        display: block;
+        margin: 10px auto 0;
+      }
+
+      /* Input and Buttons */
+      .stylish-input {
+        border-radius: 10px;
+        border: 2px solid #ff6f61;
+      }
+
+      .stylish-input:focus {
+        box-shadow: 0 0 10px #ff3d3d;
+        border-color: #ff3d3d;
+      }
+
+      /* Cards */
+      .technique-card img {
+        width: 100px;
+        height: 100px;
+        border: 2px solid #ff6f61;
+      }
+
+      /* Footer */
+
+      .navbar {
+        background: linear-gradient(45deg, #216cdd, #ae44593d);
+        width: 100%;
+      }
+
+      .dropdown-menu {
+        background: linear-gradient(45deg, #216cdd, #ae44593d);
+
+        color: white;
+      }
+
+      .nav-link {
+        position: relative;
+        left: 15px;
+      }
+
+      .navbar-brand {
+        color: #fff !important;
+        /* White text for brand name */
+        font-size: 1.5rem;
+      }
+
+      .navbar-nav .nav-link {
+        color: #fff !important;
+        /* White text for nav links */
+        font-size: 1.1rem;
+      }
+
+      .navbar-nav .nav-link:hover {
+        color: #ffd700 !important;
+        /* Gold color on hover */
+      }
+
+      .navbar-toggler-icon {
+        background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"%3E%3Cpath stroke="%23fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"/%3E%3C/svg%3E');
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">
+          <b>ArtExpo</b>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">HOME</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Categories
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item" href="contact.html">Contact</a>
+                </li>
+                <li><a class="dropdown-item" href="Faq.html">FAQ</a></li>
+                <li>
+                  <a class="dropdown-item" href="dashboard.html">Dashbord</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="art.html">Art Gallery</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="culture.html">Cultural Events </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="user.html">User</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="submit.html">Submit</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="review.html">Review</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="blog.html">Blog</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Hero Section -->
+    <section class="hero-section d-flex align-items-center text-white">
+      <div class="container text-center">
+        <h1 class="hero-title display-4 fw-bold">
+          Exploring Cultural Heritage
+        </h1>
+        <p class="hero-subtitle lead">
+          Discover the timeless beauty of traditions, stories, and art.
+        </p>
+        <a href="#heritage" class="btn btn-outline-light btn-lg mt-3"
+          >Start Exploring</a
+        >
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section py-5 bg-light">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <img
+              src="https://img.freepik.com/premium-photo/silhouettes-shadows-gudi-padwa-decorations_974247-56246.jpg?w=826"
+              alt="Cultural Heritage"
+              class="img-fluid rounded shadow"
+            />
+          </div>
+          <div class="col-md-6">
+            <h2 class="section-title stylish-heading">
+              Why Cultural Heritage Matters
+            </h2>
+            <p class="stylish-text">
+              Cultural heritage defines who we are and where we come from. It
+              encompasses ancient art, architecture, music, and oral traditions
+              passed down through generations.
+            </p>
+            <p class="stylish-text">
+              Our platform invites you to uncover the stories and significance
+              of global cultures. From iconic landmarks to hidden local customs,
+              embark on a journey to preserve and cherish these treasures.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Heritage Section -->
+    <section id="heritage" class="py-5 bg-gradient">
+      <div class="container">
+        <h2 class="section-title text-center stylish-heading mb-4">
+          Heritage to Explore
+        </h2>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="technique-card p-4 shadow rounded bg-white text-center">
+              <img
+                src="https://img.freepik.com/free-photo/vertical-view-geometrical-white-concrete-building-captured_181624-6034.jpg?t=st=1732873729~exp=1732877329~hmac=0d67103dfd8750a03fc153bc4f3489f3b0456c14cac5a55fae0d05d06a920db2&w=740"
+                alt="Architectural Marvels"
+                class="mb-3 rounded-circle"
+              />
+              <h5 class="fw-bold">Architectural Marvels</h5>
+              <p class="text-muted">
+                Discover iconic monuments and structures that tell stories of a
+                bygone era.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="technique-card p-4 shadow rounded bg-white text-center">
+              <img
+                src="https://img.freepik.com/premium-photo/close-up-toys-table_1048944-30598280.jpg?w=740"
+                alt="Traditional Arts"
+                class="mb-3 rounded-circle"
+              />
+              <h5 class="fw-bold">Traditional Arts</h5>
+              <p class="text-muted">
+                Explore weaving, pottery, and other crafts that embody cultural
+                identity.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="technique-card p-4 shadow rounded bg-white text-center">
+              <img
+                src="https://img.freepik.com/free-photo/beautiful-young-woman-wearing-sari_23-2149502998.jpg?t=st=1732873682~exp=1732877282~hmac=3f3e903ca3f8109f2992cd11d441a34962103cc90b7d41099b25c0cd3da21f64&w=740"
+                alt="Cultural Performances"
+                class="mb-3 rounded-circle"
+              />
+              <h5 class="fw-bold">Cultural Performances</h5>
+              <p class="text-muted">
+                Celebrate music, dance, and rituals that bring traditions to
+                life.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section py-5 text-white">
+      <div class="container">
+        <h2 class="section-title text-center stylish-heading text-dark">
+          Visitor Testimonials
+        </h2>
+        <div class="row g-4 mt-4">
+          <div class="col-md-6">
+            <div class="testimonial bg-dark p-4 rounded shadow">
+              <p>
+                "Learning about my heritage has deepened my connection to my
+                roots. Highly recommend this platform!"
+              </p>
+              <h6 class="text-primary">- Rahul S.</h6>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="testimonial bg-dark p-4 rounded shadow">
+              <p>
+                "The insights into global traditions were eye-opening. A
+                must-visit for culture enthusiasts!"
+              </p>
+              <h6 class="text-primary">- Sairam A.</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section py-5 bg-dark text-white">
+      <div class="container">
+        <h2 class="section-title text-center stylish-heading">Contact Us</h2>
+        <form id="contactForm" class="mt-4">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control stylish-input"
+                id="name"
+                placeholder="Your Name"
+                required
+              />
+            </div>
+            <div class="col-md-6">
+              <input
+                type="email"
+                class="form-control stylish-input"
+                id="email"
+                placeholder="Your Email"
+                required
+              />
+            </div>
+          </div>
+          <div class="mt-3">
+            <textarea
+              class="form-control stylish-input"
+              id="message"
+              rows="4"
+              placeholder="Your Message"
+              required
+            ></textarea>
+          </div>
+          <div class="text-center mt-4">
+            <button type="submit" class="btn btn-outline-light mb-3">
+              Send Message
+            </button>
+          </div>
+        </form>
+        <div id="formAlert" class="alert mt-3 d-none"></div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-3 text-white text-center bg-black">
+      <p class="mb-0">
+        &copy; 2024 Mastering Art Techniques. All Rights Reserved.
+      </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document
+        .getElementById("contactForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent form submission
+
+          // Form fields
+          const name = document.getElementById("name").value.trim();
+          const email = document.getElementById("email").value.trim();
+          const message = document.getElementById("message").value.trim();
+          const alertBox = document.getElementById("formAlert");
+
+          // Reset alert box before validating
+          alertBox.className = "alert d-none";
+
+          // Validation
+          if (name === "" || email === "" || message === "") {
+            alertBox.textContent =
+              "All fields are required. Please fill them out.";
+            alertBox.className = "alert alert-danger d-block";
+          } else if (!/^[a-zA-Z\s]+$/.test(name)) {
+            alertBox.textContent =
+              "Please enter a valid name containing only letters.";
+            alertBox.className = "alert alert-warning d-block";
+          } else if (
+            !/^[a-zA-Z0-9._%+-]+@[a-zA-Z-]+\.[a-zA-Z]{2,}$/.test(email)
+          ) {
+            alertBox.textContent = "Please enter a valid email address. Ex: example@gmail.com";
+            alertBox.className = "alert alert-warning d-block";
+          } else {
+            alertBox.textContent = "Form submitted successfully!";
+            alertBox.className = "alert alert-success d-block";
+
+            // Clear form fields
+            document.getElementById("contactForm").reset();
+          }
+        });
+    </script>
+  </body>
+</html>

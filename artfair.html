@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1"
+    />
+    <title>Artwork Detail - Abstract Harmony in Blue</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"
+      integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+      integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      /* Reset and base styles */
+      /* * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        overflow-x: hidden;
+      } */
+
+      /* Grid Layout */
+      .artwork-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        /* gap: 2rem; */
+      }
+      body {
+        background: radial-gradient(
+          circle,
+          rgba(238, 174, 202, 1) 0%,
+          rgba(148, 187, 233, 1) 100%
+        );
+        background-repeat: no-repeat;
+        overflow-x: hidden;
+      }
+
+      @media (min-width: 768px) {
+        .artwork-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      /* Image Gallery */
+      .artwork-image {
+        position: relative;
+      }
+
+      .main-image {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+      }
+
+      .thumbnail-container {
+        display: flex;
+        /* gap: 1rem; */
+        overflow-x: auto;
+        padding-bottom: 1rem;
+      }
+
+      .thumbnail {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: opacity 0.2s;
+      }
+
+      .thumbnail:hover {
+        opacity: 0.8;
+      }
+
+      /* Artwork Details */
+      .artwork-details {
+        display: flex;
+        flex-direction: column;
+        /* gap: 1.5rem; */
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      .title {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .artist {
+        color: #666;
+        font-size: 1.2rem;
+      }
+
+      .actions {
+        display: flex;
+        /* gap: 0.5rem; */
+      }
+
+      .btn {
+        padding: 0.5rem 1rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      /* .btn:hover {
+        background: #f5f5f5;
+      } */
+
+      .btn-primary {
+        background: #0070f3;
+        color: white;
+        border-color: #0070f3;
+      }
+
+      .btn-primary:hover {
+        background: #0051cc;
+      }
+
+      .favorite-btn {
+        padding: 0.5rem;
+      }
+
+      .favorite-btn.active {
+        color: #ff4136;
+      }
+
+      /* Tabs */
+      .tabs {
+        border-bottom: 1px solid #ddd;
+        margin-bottom: 1rem;
+      }
+
+      .tab-buttons {
+        display: flex;
+        /* gap: 1rem; */
+      }
+
+      .tab-btn {
+        padding: 0.5rem 1rem;
+        border: none;
+        background: none;
+        cursor: pointer;
+        opacity: 0.7;
+      }
+
+      .tab-btn.active {
+        opacity: 1;
+        border-bottom: 2px solid #0070f3;
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      /* Reviews */
+      .reviews {
+        display: flex;
+        flex-direction: column;
+        /* gap: 1rem; */
+      }
+
+      .review {
+        padding: 1rem;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .stars {
+        color: #ffd700;
+        margin: 0.5rem 0;
+      }
+
+      /* Related Artworks */
+      .related-artworks {
+        margin-top: 3rem;
+      }
+
+      .artwork-grid-4 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        /* gap: 1.5rem; */
+        margin-top: 1rem;
+      }
+
+      .artwork-card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .artwork-card img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+      }
+
+      .artwork-card-content {
+        padding: 1rem;
+        min-height: 260px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      /* Social Share */
+      .social-share {
+        display: flex;
+        justify-content: center;
+        /* gap: 1rem; */
+        margin-top: 1rem;
+      }
+
+      .zoom-btn {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 50%;
+        padding: 0.5rem;
+        cursor: pointer;
+      }
+
+      /* Modal */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 1000;
+      }
+
+      .modal.active {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content {
+        max-width: 90%;
+        max-height: 90%;
+      }
+
+      .modal-content img {
+        width: 100%;
+        height: auto;
+        max-height: 90vh;
+        object-fit: contain;
+      }
+
+      .close-modal {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        color: white;
+        font-size: 2rem;
+        cursor: pointer;
+      }
+
+      /* Zoom Container */
+      .zoom-container {
+        overflow: hidden;
+        position: relative;
+        width: 100%;
+        height: auto;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+      }
+
+      .zoom-image {
+        transform-origin: center center;
+        transition: transform 0.3s ease, left 0.3s ease, top 0.3s ease;
+        position: relative;
+        width: 100%;
+        height: auto;
+      }
+
+      .zoom-controls {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 10;
+      }
+
+      /* Purchase Modal */
+      .purchase-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+        z-index: 1001;
+      }
+
+      .purchase-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 8px;
+        width: 400px;
+      }
+
+      .purchase-content h3 {
+        margin-bottom: 1rem;
+      }
+
+      .is-invalid {
+        border: 1px solid red;
+      }
+
+      .artwork-grid {
+        flex-wrap: wrap;
+        /* gap: 1rem; */
+      }
+
+      .artwork-image img {
+        max-width: 100%;
+        border-radius: 10px;
+      }
+
+      .thumbnail-container {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 1rem;
+      }
+
+      .thumbnail-container img {
+        width: 80px;
+        height: auto;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+
+      .tab-buttons button {
+        margin-right: 0.5rem;
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      .favorite-btn.active {
+        color: red;
+      }
+
+      .social-share button {
+        margin-right: 0.5rem;
+      }
+
+      .related-artworks .artwork-card img {
+        max-width: 100%;
+        display: grid;
+        justify-content: center;
+        border-radius: 10px;
+      }
+
+      .related-artworks h2 {
+        margin-bottom: 1rem;
+      }
+
+      .purchase-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+        z-index: 1050;
+      }
+
+      .purchase-content {
+        background: #fff;
+        padding: 2rem;
+        border-radius: 10px;
+        max-width: 500px;
+        width: 100%;
+      }
+
+      .zoom-container {
+        position: relative;
+      }
+
+      .zoom-controls {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+      }
+      .navbar {
+        background: linear-gradient(45deg, #216cdd, #ae44593d);
+        width: 100%;
+      }
+
+      .dropdown-menu {
+        background: linear-gradient(45deg, #216cdd, #ae44593d);
+
+        color: white;
+      }
+
+      .nav-link {
+        position: relative;
+        left: 15px;
+      }
+
+      .navbar-brand {
+        color: #fff !important;
+        /* White text for brand name */
+        font-size: 1.5rem;
+      }
+
+      .navbar-nav .nav-link {
+        color: #fff !important;
+        /* White text for nav links */
+        font-size: 1.1rem;
+      }
+
+      .navbar-nav .nav-link:hover {
+        color: #ffd700 !important;
+        /* Gold color on hover */
+      }
+
+      .navbar-toggler-icon {
+        background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"%3E%3Cpath stroke="%23fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"/%3E%3C/svg%3E');
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">
+          <b>ArtExpo</b>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">HOME</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Categories
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item" href="contact.html">Contact</a>
+                </li>
+                <li><a class="dropdown-item" href="Faq.html">FAQ</a></li>
+                <li>
+                  <a class="dropdown-item" href="dashboard.html">Dashbord</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="art.html">Art Gallery</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="culture.html">Cultural Events </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="user.html">User</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="submit.html">Submit</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="review.html">Review</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="blog.html">Blog</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div style="min-height: 100vh">
+      <div class="container mt-5">
+        <div class="artwork-grid">
+          <!-- Artwork Image Section -->
+          <div class="artwork-image">
+            <div class="row">
+              <div class="col-12">
+                <div class="zoom-container">
+                  <img
+                    src="https://media.assettype.com/freepressjournal/2022-12/03bf89d8-3565-410d-85a0-aabddc44c590/mumbai_urban_festival.jpg"
+                    alt="Abstract Harmony in Blue"
+                    class="main-image zoom-image"
+                    id="artworkImage"
+                  />
+                  <div class="zoom-controls">
+                    <button class="btn btn-light btn-sm" id="zoomIn">+</button>
+                    <button class="btn btn-light btn-sm" id="zoomOut">-</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="thumbnail-container">
+              <img
+                src="https://www.shutterstock.com/shutterstock/videos/1049636269/thumb/1.jpg?ip=x480"
+                alt="Thumbnail 1"
+                class="thumbnail"
+              />
+              <img
+                src="https://indiaartfair.in/app/uploads/2021/03/IMG_1112-1600x900.jpg"
+                alt="Thumbnail 2"
+                class="thumbnail"
+              />
+              <img
+                src="https://png.pngtree.com/thumb_back/fh260/background/20240801/pngtree-new-art-1080p-2k-4k-5k-hd-wallpapers-free-download-background-image_16123072.jpg"
+                alt="Thumbnail 3"
+                class="thumbnail"
+              />
+              <img
+                src="https://c0.wallpaperflare.com/preview/220/64/1016/argentina-buenos-aires-street-art-spanish.jpg"
+                alt="Thumbnail 4"
+                class="thumbnail"
+              />
+            </div>
+          </div>
+
+          <!-- Artwork Details Section -->
+          <div class="artwork-details ms-2">
+            <div class="header mt-3">
+              <div>
+                <h1 class="title">local art fair</h1>
+                <p class="artist">By sairam</p>
+              </div>
+              <div class="actions">
+                <button class="btn favorite-btn" id="favoriteBtn">❤</button>
+              </div>
+            </div>
+
+            <div class="stars">★★★★☆ (128 reviews)</div>
+
+            <div class="price">
+              <h2>2,500</h2>
+              <p>Original Artwork | Certificate of Authenticity</p>
+            </div>
+
+            <div class="tabs">
+              <div class="tab-buttons">
+                <button class="tab-btn active" data-tab="details">
+                  Details
+                </button>
+                <button class="tab-btn" data-tab="artist">Organiser</button>
+                <button class="tab-btn" data-tab="reviews">Reviews</button>
+              </div>
+
+              <div class="tab-content activenmt" id="details">
+                <div
+                  style="
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 1rem;
+                    margin-bottom: 1rem;
+                    margin-top: 10px;
+                  "
+                >
+                  <div>
+                    <p style="color: #666">Medium</p>
+                    <p>Oil on Canvas</p>
+                  </div>
+                  <div>
+                    <p style="color: #666">Dimensions</p>
+                    <p>36" × 48"</p>
+                  </div>
+                  <div>
+                    <p style="color: #666">Year</p>
+                    <p>2023</p>
+                  </div>
+                  <div>
+                    <p style="color: #666">Style</p>
+                    <p>Abstract</p>
+                  </div>
+                </div>
+                <p>
+                  "Abstract Harmony in Blue" is a stunning contemporary piece
+                  that explores the interplay of color and emotion. Through bold
+                  brushstrokes and a sophisticated palette dominated by various
+                  shades of blue, the artwork creates a sense of depth and
+                  movement that draws viewers into its ethereal composition.
+                </p>
+              </div>
+
+              <div class="tab-content" id="artist">
+                <div style="display: flex; gap: 1rem; margin-bottom: 1rem">
+                  <img
+                    style="width: 150px; height: 150px; margin-top: 30px"
+                    class="img-fluid rounded-circle"
+                    src="https://images.pexels.com/photos/7691739/pexels-photo-7691739.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                    alt="Ashok kumar"
+                    style="border-radius: 50%"
+                  />
+                  <div>
+                    <h3 class="mt-3">Ashok kumar</h3>
+                    <p>Contemporary Abstract Artist</p>
+                  </div>
+                </div>
+                <p>
+                  Ashok kumar is a renowned contemporary artist known for her
+                  bold abstract compositions. With over 15 years of experience,
+                  her work has been featured in major galleries across Europe
+                  and North America.
+                </p>
+                <a href="org2.html">
+                  <button class="btn mb-4" style="margin-top: 1rem">
+                    View Artist Profile
+                  </button></a
+                >
+              </div>
+
+              <div class="tab-content" id="reviews">
+                <div class="reviews">
+                  <div class="review">
+                    <h4>Art Enthusiast</h4>
+                    <div class="stars">★★★★★</div>
+                    <p>
+                      A breathtaking piece that captures the essence of
+                      contemporary abstract art. The use of color is
+                      particularly striking.
+                    </p>
+                  </div>
+                  <div class="review">
+                    <h4>Gallery Curator</h4>
+                    <div class="stars">★★★★☆</div>
+                    <p>
+                      Exceptional composition and technique. Sarah's mastery of
+                      the medium is evident in every brushstroke.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 1rem">
+              <button class="btn btn-primary" id="purchaseBtn">
+                Purchase Tickets
+              </button>
+            </div>
+
+            <div class="social-share">
+              <div class="row">
+                <div class="col-4">
+                  <button class="btn">Facebook</button>
+                </div>
+                <div class="col-4">
+                  <button class="btn">Twitter</button>
+                </div>
+                <div class="col-4 p-0">
+                  <button class="btn">LinkedIn</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Related Artworks Section -->
+      <div class="container">
+        <div class="related-artworks mb-5">
+          <div class="row">
+            <div class="col-12 text-center">
+              <h2>Related Cultural</h2>
+            </div>
+          </div>
+          <div class="artwork-grid-4 mb-2">
+            <div class="row text-center">
+              <div class="col-md-3 text-center">
+                <div class="artwork-card mb-4">
+                  <img
+                    src="https://t3.ftcdn.net/jpg/10/57/77/38/360_F_1057773892_zbkKMdSysaq3iKefvbT4XAs6d8gEAUqn.jpg"
+                    alt="Related Artwork 1"
+                  />
+                  <div class="artwork-card-content">
+                    <h3>Artisan Market ART</h3>
+                    <p>prashanth</p>
+                    <p style="font-weight: bold; margin-top: 0.5rem">3,400</p>
+                    <a href="culture.html">
+                      <button class="btn btn-primary">view more</button></a
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3 text-center">
+                <div class="artwork-card mb-4">
+                  <img
+                    src="https://media.istockphoto.com/id/157505356/photo/beer-at-beer-fest-in-munich-germany.jpg?s=612x612&w=0&k=20&c=e_2kJhkcC9TeutcFoKhag35x0xy7ftMFwG03G3VMwuE="
+                    alt="Related Artwork 2"
+                  />
+                  <div class="artwork-card-content">
+                    <h3>Craft Beer Festival</h3>
+                    <p>Ashok kumar</p>
+                    <p style="font-weight: bold; margin-top: 0.5rem">5,100</p>
+                    <a href="culture.html"
+                      ><button class="btn btn-primary">view more</button></a
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="artwork-card mb-4">
+                  <img
+                    src="https://img.freepik.com/premium-photo/colorful-childrens-art-class-action_952286-20901.jpg"
+                    alt="Related Artwork 3"
+                  />
+                  <div class="artwork-card-content">
+                    <h3>Children’s Workshop</h3>
+                    <p>Shiva kumar</p>
+                    <p style="font-weight: bold; margin-top: 0.5rem">4,100</p>
+                    <a href="culture.html">
+                      <button class="btn btn-primary">view more</button></a
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="artwork-card mb-4">
+                  <img
+                    src="https://img.freepik.com/premium-photo/colorful-dance-festival-celebrates-cultural-heritage-together_1079150-179465.jpg"
+                  />
+                  <div class="artwork-card-content">
+                    <h3>Traditional Festival</h3>
+                    <p>Arun kumar</p>
+                    <p style="font-weight: bold; margin-top: 0.5rem">3,200</p>
+                    <a href="culture.html">
+                      <button class="btn btn-primary">view more</button></a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Purchase Modal -->
+      <div class="purchase-modal" id="purchaseModal">
+        <div class="purchase-content">
+          <h3>Purchase Tickets</h3>
+          <form id="purchaseForm">
+            <div class="mb-3">
+              <label for="creditCardNumber" class="form-label"
+                >Credit Card Number</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="creditCardNumber"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="cvv" class="form-label">CVV</label>
+              <input type="text" class="form-control" id="cvv" required />
+            </div>
+            <div class="mb-3">
+              <label for="fullName" class="form-label"
+                >Full Name (Min 3 characters)</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="fullName"
+                pattern=".{3,}"
+                title="Minimum 3 characters required"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label"
+                >Email (Format: example@domain.com)</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="email"
+                pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z-]+\.[a-zA-Z]{2,}$"
+                title="Please enter a valid email address (e.g., example@domain.com)"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              id="closePurchaseModal"
+            >
+              Cancel
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <footer class="footer py-3 text-white text-center bg-black">
+      <p class="mb-0">
+        &copy; 2024 Mastering Art Techniques. All Rights Reserved.
+      </p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      // Tab Functionality
+      const tabButtons = document.querySelectorAll(".tab-btn");
+      const tabContents = document.querySelectorAll(".tab-content");
+
+      tabButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          // Remove active class from all buttons and contents
+          tabButtons.forEach((btn) => btn.classList.remove("active"));
+          tabContents.forEach((content) => content.classList.remove("active"));
+
+          // Add active class to clicked button and corresponding content
+          button.classList.add("active");
+          const tabId = button.getAttribute("data-tab");
+          document.getElementById(tabId).classList.add("active");
+        });
+      });
+
+      // Favorite Functionality
+      const favoriteBtn = document.getElementById("favoriteBtn");
+      let isFavorite = localStorage.getItem("favorite-artwork-123") === "true";
+
+      // Set initial state
+      if (isFavorite) {
+        favoriteBtn.classList.toggle("active");
+      }
+
+      favoriteBtn.addEventListener("click", () => {
+        isFavorite = !isFavorite;
+        localStorage.setItem("favorite-artwork-123", isFavorite);
+        favoriteBtn.classList.toggle("active");
+
+        // Redirect to fav.html
+        if (isFavorite) {
+          window.location.href = "fav.html";
+        }
+      });
+
+      // Zoom functionality
+      const image = document.getElementById("artworkImage");
+      let scale = 1;
+      document.getElementById("zoomIn").addEventListener("click", () => {
+        scale += 0.1;
+        image.style.transform = `scale(${scale})`;
+      });
+      document.getElementById("zoomOut").addEventListener("click", () => {
+        scale = Math.max(1, scale - 0.1);
+        image.style.transform = `scale(${scale})`;
+      });
+
+      // Purchase button functionality
+      const purchaseBtn = document.getElementById("purchaseBtn");
+      purchaseBtn.addEventListener("click", () => {
+        document.getElementById("purchaseModal").style.display = "flex";
+      });
+
+      document
+        .getElementById("closePurchaseModal")
+        .addEventListener("click", () => {
+          document.getElementById("purchaseModal").style.display = "none";
+        });
+
+      // Real-time Validation Functionality
+      const creditCardInput = document.getElementById("creditCardNumber");
+      const cvvInput = document.getElementById("cvv");
+
+      creditCardInput.addEventListener("input", () => {
+        const value = creditCardInput.value.replace(/\D/g, ""); // Remove non-digit characters
+        creditCardInput.value = value.substring(0, 16); // Limit to 16 digits
+
+        if (value.length === 16) {
+          creditCardInput.classList.remove("is-invalid");
+        } else {
+          creditCardInput.classList.add("is-invalid");
+        }
+      });
+
+      cvvInput.addEventListener("input", () => {
+        const value = cvvInput.value.replace(/\D/g, ""); // Remove non-digit characters
+        cvvInput.value = value.substring(0, 3); // Limit to 3 digits
+
+        if (value.length === 3) {
+          cvvInput.classList.remove("is-invalid");
+        } else {
+          cvvInput.classList.add("is-invalid");
+        }
+      });
+
+      document
+        .getElementById("purchaseForm")
+        .addEventListener("submit", (e) => {
+          e.preventDefault();
+
+          // Validate form
+          const creditCardNumber = creditCardInput.value;
+          const cvv = cvvInput.value;
+          const fullName = document.getElementById("fullName").value;
+          const email = document.getElementById("email").value;
+
+          if (
+            creditCardNumber.length !== 16 ||
+            cvv.length !== 3 ||
+            fullName.length < 3 ||
+            !email.match(/[a-z0-9._%+-]+@[a-zA-Z]+\.[a-z]{2,}/)
+          ) {
+            Swal.fire(
+              "Error",
+              "Please enter valid Credit Card, CVV, Name (min 3 characters), and Email",
+              "error"
+            );
+            return;
+          }
+
+          Swal.fire("Success", "Purchase completed successfully!", "success");
+          document.getElementById("purchaseModal").style.display = "none";
+          document.getElementById("purchaseForm").reset();
+        });
+
+      // Thumbnail Gallery Functionality
+      const thumbnails = document.querySelectorAll(".thumbnail");
+      thumbnails.forEach((thumbnail) => {
+        thumbnail.addEventListener("click", () => {
+          image.src = thumbnail.src.replace("150", "800");
+        });
+      });
+
+      // Share Functionality
+      const shareButtons = document.querySelectorAll(".social-share .btn");
+      shareButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const shareUrl = encodeURIComponent(window.location.href);
+          const shareTitle = encodeURIComponent(document.title);
+          let shareLink = "";
+
+          switch (button.textContent) {
+            case "Facebook":
+              shareLink = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
+              break;
+            case "Twitter":
+              shareLink = `https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareTitle}`;
+              break;
+            case "LinkedIn":
+              shareLink = `https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`;
+              break;
+          }
+
+          if (shareLink) {
+            window.open(shareLink, "_blank", "width=600,height=400");
+          }
+        });
+      });
+
+      // Responsive Image Loading
+      function loadResponsiveImages() {
+        const images = document.querySelectorAll("img");
+        images.forEach((img) => {
+          if (window.innerWidth < 768) {
+            img.src = img.src.replace("800", "400");
+          }
+        });
+      }
+
+      window.addEventListener("resize", loadResponsiveImages);
+      window.addEventListener("load", loadResponsiveImages);
+
+      // Purchase Button Animation
+      purchaseBtn.addEventListener("click", () => {
+        purchaseBtn.style.transform = "scale(0.95)";
+        setTimeout(() => {
+          purchaseBtn.style.transform = "scale(1)";
+        }, 100);
+      });
+
+      favoriteBtn.addEventListener("click", () => {
+        isFavorite = !isFavorite;
+        localStorage.setItem("favorite-artwork-123", isFavorite);
+
+        const artworkDetails = {
+          image: image.src,
+          title: document.querySelector(".title").innerText,
+          artist: document.querySelector(".artist").innerText,
+          price: document.querySelector(".price h2").innerText,
+        };
+
+        let favoriteArtworks =
+          JSON.parse(localStorage.getItem("favoriteArtworks")) || [];
+
+        if (isFavorite) {
+          favoriteArtworks.push(artworkDetails);
+        } else {
+          favoriteArtworks = favoriteArtworks.filter(
+            (artwork) => artwork.title !== artworkDetails.title
+          );
+        }
+
+        localStorage.setItem(
+          "favoriteArtworks",
+          JSON.stringify(favoriteArtworks)
+        );
+
+        favoriteBtn.classList.toggle("active");
+
+        // Redirect to fav.html if added to favorites
+        if (isFavorite) {
+          window.location.href = "fav.html";
+        }
+      });
+    </script>
+  </body>
+</html>

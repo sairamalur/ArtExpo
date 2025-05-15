@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"
+      integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+      integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Art Gallery Collection</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f5f5f5;
+        overflow-x: hidden;
+      }
+
+      .header {
+        background-color: #fff;
+        padding: 1.5rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .header h1 {
+        text-align: center;
+        color: #2c3e50;
+        margin-bottom: 1.5rem;
+        font-size: clamp(1.5rem, 4vw, 2.5rem);
+      }
+
+      .filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 1rem;
+        background-color: #fff;
+        margin-bottom: 2rem;
+        justify-content: center;
+      }
+
+      .filter-group {
+        flex: 1 1 200px;
+        max-width: 300px;
+      }
+
+      .filter-group select {
+        width: 100%;
+        padding: 0.8rem;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background-color: white;
+      }
+
+      .filter-group select:hover,
+      .filter-group select:focus {
+        border-color: #2c3e50;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(44, 62, 80, 0.1);
+      }
+
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+        gap: clamp(1rem, 2vw, 2rem);
+        padding: clamp(1rem, 2vw, 2rem);
+        max-width: 2560px;
+        margin: 0 auto;
+      }
+
+      .artwork {
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+
+      .artwork:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .artwork img {
+        width: 100%;
+        height: clamp(200px, 30vw, 300px);
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+
+      .artwork:hover img {
+        transform: scale(1.05);
+      }
+
+      .artwork-info {
+        padding: 1.5rem;
+      }
+
+      .artwork-info h3 {
+        margin-bottom: 0.8rem;
+        color: #2c3e50;
+        font-size: clamp(1rem, 1.5vw, 1.3rem);
+      }
+
+      .artwork-info p {
+        color: #666;
+        font-size: clamp(0.875rem, 1.2vw, 1rem);
+        margin-bottom: 0.5rem;
+      }
+
+      .price {
+        font-weight: bold;
+        color: #2c3e50;
+        font-size: clamp(1rem, 1.3vw, 1.2rem);
+        margin-top: 1rem;
+      }
+
+      /* Enhanced Modal Styles */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        z-index: 1000;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        overflow-y: auto;
+        padding: clamp(0.5rem, 2vw, 2rem);
+      }
+
+      .modal.active {
+        opacity: 1;
+      }
+
+      .modal-content {
+        position: relative;
+        background-color: #fff;
+        margin: auto;
+        width: min(95%, 1200px);
+        border-radius: 12px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        transform: translateY(-20px);
+        transition: transform 0.3s ease;
+        overflow: hidden;
+      }
+
+      .modal.active .modal-content {
+        transform: translateY(0);
+      }
+
+      .modal-header {
+        padding: clamp(1rem, 2vw, 2rem);
+        border-bottom: 1px solid #eee;
+      }
+
+      .modal-body {
+        padding: clamp(1rem, 2vw, 2rem);
+      }
+
+      .close-modal {
+        position: absolute;
+        right: clamp(1rem, 2vw, 1.5rem);
+        top: clamp(1rem, 2vw, 1.5rem);
+        font-size: clamp(1.5rem, 3vw, 2rem);
+        cursor: pointer;
+        color: #2c3e50;
+        transition: color 0.3s ease;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.9);
+        z-index: 2;
+      }
+
+      .close-modal:hover {
+        color: #e74c3c;
+        background-color: #fff;
+      }
+
+      .modal-image-container {
+        position: relative;
+        width: 100%;
+        height: clamp(200px, 50vh, 600px);
+        overflow: hidden;
+      }
+
+      .modal-image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        background-color: #f8f9fa;
+        margin-top: 50px;
+      }
+
+      .modal-details {
+        padding: clamp(1rem, 2vw, 2rem);
+      }
+
+      .modal-title {
+        font-size: clamp(1.5rem, 2.5vw, 2rem);
+        color: #2c3e50;
+        margin-bottom: 1rem;
+      }
+
+      .modal-artist {
+        font-size: clamp(1rem, 1.5vw, 1.2rem);
+        color: #666;
+        margin-bottom: 1rem;
+      }
+
+      .modal-description {
+        font-size: clamp(0.875rem, 1.2vw, 1rem);
+        color: #666;
+        margin-bottom: 1rem;
+        line-height: 1.6;
+      }
+
+      .modal-price {
+        font-size: clamp(1.2rem, 2vw, 1.5rem);
+        color: #2c3e50;
+        font-weight: bold;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .filters {
+          gap: 0.8rem;
+          padding: 0.8rem;
+        }
+
+        .filter-group {
+          flex: 1 1 150px;
+        }
+
+        .modal-content {
+          margin: 0.5rem auto;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .header {
+          padding: 1rem;
+        }
+
+        .filters {
+          gap: 0.5rem;
+          padding: 0.5rem;
+        }
+
+        .filter-group select {
+          padding: 0.6rem;
+          font-size: 0.9rem;
+        }
+
+        .modal-image-container {
+          height: clamp(200px, 40vh, 300px);
+        }
+      }
+
+      @media (min-width: 2000px) {
+        .gallery {
+          grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+        }
+
+        .artwork img {
+          height: 400px;
+        }
+
+        .modal-content {
+          max-width: 1600px;
+        }
+      }
+
+      /* Animation Keyframes */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideUp {
+        from {
+          transform: translateY(20px);
+        }
+        to {
+          transform: translateY(0);
+        }
+      }
+      .navbar {
+            background: linear-gradient(45deg, #216cdd, #ae44593d);
+            width: 100%;
+
+        }
+
+        .dropdown-menu {
+            background: linear-gradient(45deg, #216cdd, #ae44593d);
+
+            color: white;
+        }
+
+        .nav-link {
+            position: relative;
+            left: 15px;
+        }
+
+        .navbar-brand {
+            color: #fff !important;
+            /* White text for brand name */
+            font-size: 1.5rem;
+        }
+
+        .navbar-nav .nav-link {
+            color: #fff !important;
+            /* White text for nav links */
+            font-size: 1.1rem;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #FFD700 !important;
+            /* Gold color on hover */
+        }
+
+        .navbar-toggler-icon {
+            background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"%3E%3Cpath stroke="%23fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"/%3E%3C/svg%3E');
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+
+                <b>Couponify</b>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">HOME</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Categories
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="contact.html">Contact</a></li>
+                            <li><a class="dropdown-item" href="Faq.html">FAQ</a></li>
+                            <li><a class="dropdown-item" href="dashboard.html">Dashbord</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="art.html">Art Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="culture.html">Cultural Events </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="user.html">User</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="submit.html">Submit</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="review.html">Review</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="blog.html">Blog</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <header class="header">
+      <h1>Art Gallery Collection</h1>
+      <div class="filters">
+        <div class="filter-group">
+          <select id="medium-filter" aria-label="Filter by medium">
+            <option value="">All Mediums</option>
+            <option value="oil">Oil Painting</option>
+            <option value="watercolor">Watercolor</option>
+            <option value="digital">Digital Art</option>
+            <option value="sculpture">Sculpture</option>
+            <option value="acrylic">Acrylic</option>
+            <option value="mixed">Mixed Media</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <select id="style-filter" aria-label="Filter by style">
+            <option value="">All Styles</option>
+            <option value="abstract">Abstract</option>
+            <option value="realistic">Realistic</option>
+            <option value="impressionist">Impressionist</option>
+            <option value="modern">Modern</option>
+            <option value="contemporary">Contemporary</option>
+            <option value="minimalist">Minimalist</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <select id="price-filter" aria-label="Filter by price range">
+            <option value="">All Prices</option>
+            <option value="0-1000">Under 1000</option>
+            <option value="1001-5000">1001 - 5000</option>
+            <option value="5001-10000">5001 - 10000</option>
+            <option value="10001+">Above 10000</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <select id="sort-filter" aria-label="Sort artworks">
+            <option value="newest">Newest Arrivals</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="popular">Most Popular</option>
+          </select>
+        </div>
+      </div>
+    </header>
+
+    <main class="gallery" id="gallery"></main>
+
+    <div class="modal" id="modal" role="dialog" aria-modal="true">
+      <div class="modal-content">
+        <button class="close-modal" id="close-modal" aria-label="Close modal">
+          &times;
+        </button>
+        <div class="modal-image-container">
+          <img class="modal-image" id="modal-image" src="" alt="" />
+        </div>
+        <div class="modal-details">
+          <h2 class="modal-title" id="modal-title"></h2>
+          <p class="modal-artist" id="modal-artist"></p>
+          <p class="modal-description" id="modal-description"></p>
+          <p class="modal-price" id="modal-price"></p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Art collection data with 30 unique artworks
+      const artCollection = [
+        {
+          id: 1,
+          title: "Mountain Sunrise",
+          artist: "Elena Martinez",
+          medium: "Oil Painting",
+          style: "Realistic",
+          price: 3500,
+          image: "https://images7.alphacoders.com/135/1354163.jpeg",
+          description:
+            "A stunning oil painting capturing the first light of dawn over mountain peaks.",
+          url: "product1.html",
+          pageName: "mountainsunrise.html",
+        },
+        {
+          id: 2,
+          title: "Urban Dreams",
+          artist: "Marcus Chen",
+          medium: "Digital Art",
+          style: "Contemporary",
+          price: 2800,
+          image:
+            "https://w0.peakpx.com/wallpaper/659/335/HD-wallpaper-by-samarin-arseniy-urban-dreams-art-snow-car-night-winter.jpg",
+          description:
+            "A contemporary digital artwork exploring urban landscapes and dreams.",
+            pageName: "urbandreams.html",
+        },
+        {
+          id: 3,
+          title: "Ocean Waves",
+          artist: "Sarah Johnson",
+          medium: "Watercolor",
+          style: "Impressionist",
+          price: 4200,
+          image:
+            "https://wallpapers.com/images/hd/ocean-waves-digital-art-pxhtxw42ia0cxwh6.jpg",
+          description:
+            "Delicate watercolor capturing the movement and beauty of ocean waves.",
+            pageName: "oceanwaves.html",
+        },
+        {
+          id: 4,
+          title: "Abstract Thoughts",
+          artist: "David Lee",
+          medium: "Mixed Media",
+          style: "Abstract",
+          price: 5500,
+          image:
+            "https://img.freepik.com/premium-photo/generative-ai-human-head-inspiration-abstract-thought-universe-your-mind-watercolor_137321-2660.jpg",
+          description:
+            "An abstract exploration of thoughts and emotions through mixed media.",
+            pageName: "abstractthoughts.html",
+        },
+        {
+          id: 5,
+          title: "Forest Light",
+          artist: "Emma Wilson",
+          medium: "Oil Painting",
+          style: "Realistic",
+          price: 6200,
+          image:
+            "https://i.pinimg.com/736x/45/e3/ef/45e3ef39a35d41473e7ccd9d3a50f0f4.jpg",
+          description: "Sunlight filtering through a dense forest canopy.",
+          pageName: "forestlight.html",
+        },
+        {
+          id: 6,
+          title: "City Nights",
+          artist: "James Taylor",
+          medium: "Digital Art",
+          style: "Modern",
+          price: 3200,
+          image:
+            "https://w0.peakpx.com/wallpaper/23/277/HD-wallpaper-music-night-art-colourful-lights-night-time-city-wet-roads-street-scene-painting-storefront-rain-parked-cars.jpg",
+          description: "A modern interpretation of city nightlife.",
+          pageName: "citynights.html",
+        },
+        {
+          id: 7,
+          title: "Spring Garden",
+          artist: "Sophie Brown",
+          medium: "Watercolor",
+          style: "Impressionist",
+          price: 2900,
+          image:
+            "https://c4.wallpaperflare.com/wallpaper/538/841/273/artistic-painting-garden-gazebo-wallpaper-preview.jpg",
+          description:
+            "A vibrant watercolor depicting a spring garden in full bloom.",
+            pageName: "springgarden.html",
+        },
+        {
+          id: 8,
+          title: "Desert Wind",
+          artist: "Michael Rodriguez",
+          medium: "Acrylic",
+          style: "Contemporary",
+          price: 4800,
+          image:
+            "https://d1joui61864gj3.cloudfront.net/1935477/md_wn8uxz_302180c51a0e40dc636268c98edcc29ec7962ea4.jpg",
+          description:
+            "An acrylic painting capturing the essence of desert landscapes.",
+            pageName: "Desertwind.html",
+        },
+        {
+          id: 9,
+          title: "Geometric Dreams",
+          artist: "Lisa Chang",
+          medium: "Digital Art",
+          style: "Minimalist",
+          price: 2500,
+          image:
+            "https://img.freepik.com/premium-photo/abstract-psychedelic-neon-cartoon-dream-world-background-graffiti-art-generative-ai_863013-2718.jpg",
+          description: "Minimalist digital art exploring geometric patterns.",
+          pageName: "Geometricdreams.html",
+        },
+        {
+          id: 10,
+          title: "Autumn Path",
+          artist: "Robert White",
+          medium: "Oil Painting",
+          style: "Impressionist",
+          price: 5800,
+          image:
+            "https://c4.wallpaperflare.com/wallpaper/431/984/970/painting-street-light-couple-fall-wallpaper-preview.jpg",
+          description: "An impressionist view of an autumn woodland path.",
+          pageName: "AutumnPath.html",
+        },
+        {
+          id: 11,
+          title: "Urban Flow",
+          artist: "Jennifer Kim",
+          medium: "Mixed Media",
+          style: "Abstract",
+          price: 4100,
+          image:
+            "https://c4.wallpaperflare.com/wallpaper/767/794/424/leonid-afremov-oil-painting-painting-street-light-wallpaper-preview.jpg",
+          description: "Abstract representation of urban movement and flow.",
+          pageName: "urbanflow.html",
+        },
+        {
+          id: 12,
+          title: "Peaceful Waters",
+          artist: "Thomas Moore",
+          medium: "Watercolor",
+          style: "Realistic",
+          price: 3800,
+          image:
+            "https://c4.wallpaperflare.com/wallpaper/189/854/571/anime-landscape-anime-art-painting-sea-wallpaper-preview.jpg",
+          description: "Realistic watercolor of a serene lake scene.",
+          pageName: "peacefulwaters.html",
+        },
+        {
+          id: 13,
+          title: "Digital Landscape",
+          artist: "Alex Rivera",
+          medium: "Digital Art",
+          style: "Contemporary",
+          price: 2700,
+          image:
+            "https://img.freepik.com/premium-photo/augmented-reality-art-creation-tools-immersive-digital-painting-solid-color-background-4k-ultra-hd_964851-117051.jpg",
+          description:
+            "Contemporary digital interpretation of natural landscapes.",
+            pageName: "digitallandscape.html",
+        },
+        {
+          id: 14,
+          title: "Summer Meadow",
+          artist: "Catherine Lewis",
+          medium: "Oil Painting",
+          style: "Realistic",
+          price: 6500,
+          image:
+            "https://w0.peakpx.com/wallpaper/45/286/HD-wallpaper-summertime-bush-painting-flowers-blossoms-artwork-meadow-landscape.jpg",
+          description: "A detailed oil painting of a summer meadow in bloom.",
+          pageName: "Summermeadow.html",
+        },
+        {
+          id: 15,
+          title: "Abstract Motion",
+          artist: "Daniel Park",
+          medium: "Acrylic",
+          style: "Abstract",
+          price: 3900,
+          image:
+            "https://c4.wallpaperflare.com/wallpaper/904/357/212/artwork-canvas-colorful-emotions-wallpaper-preview.jpg",
+          description:
+            "Dynamic abstract painting exploring movement and color.",
+            pageName: "Abstractmotion.html",
+        },
+        {
+          id: 16,
+          title: "Coastal Dreams",
+          artist: "Maria Garcia",
+          medium: "Watercolor",
+          style: "Impressionist",
+          price: 3200,
+          image:
+            "https://w0.peakpx.com/wallpaper/280/751/HD-wallpaper-coastal-village-buildings-abstract-sky-clouds-art-work-boat-fantasy-splendor-paradise-mountains-painting-village-nature-coastal-river.jpg",
+          description: "Impressionist watercolor of a coastal landscape.",
+          pageName: "Coastaldreams.html",
+        },
+        {
+          id: 17,
+          title: "Modern Cityscape",
+          artist: "Kevin Anderson",
+          medium: "Digital Art",
+          style: "Modern",
+          price: 3100,
+          image:
+            "https://w0.peakpx.com/wallpaper/327/491/HD-wallpaper-city-sleeps-f-pattern-art-cityscape-beautiful-abstract-illustration-artwork-afremov-texture-painting-wide-screen.jpg",
+          description:
+            "A modern interpretation of urban architecture and city life.",
+            pageName: "Moderncityscape.html",
+        },
+        {
+          id: 18,
+          title: "Forest Mysteries",
+          artist: "Rachel Green",
+          medium: "Oil Painting",
+          style: "Impressionist",
+          price: 5200,
+          image:
+            "https://img.pikbest.com/wp/202413/forest-mystery-colorful-natural-landscape-mysterious_10466831.jpg!bw700",
+          description: "Mysterious and atmospheric forest scene in oils.",
+          pageName: "Forestmysteries.html",
+        },
+        {
+          id: 19,
+          title: "Abstract Harmony",
+          artist: "Steven Wright",
+          medium: "Mixed Media",
+          style: "Abstract",
+          price: 4400,
+          image:
+            "https://easy-peasy.ai/cdn-cgi/image/quality=70,format=auto,width=300/https://fdczvxmwwjwpwbeeqcth.supabase.co/storage/v1/object/public/images/a8cb5764-e3b2-4db9-bf2d-8022256ec2a7/8ebd91a1-212f-4384-95bf-8a407beb5401.png",
+          description:
+            "Harmonious blend of colors and textures in abstract form.",
+            pageName: "Abstractharmony.html",
+        },
+        {
+          id: 20,
+          title: "Desert Sunset",
+          artist: "Laura Martinez",
+          medium: "Acrylic",
+          style: "Realistic",
+          price: 3700,
+          image:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3blhnh0HXpIDkuA8276kzTGfbNF7TeVThBA&s",
+          description: "Vivid acrylic painting of a desert sunset.",
+          pageName: "DesertSunset.html",
+        },
+        {
+          id: 21,
+          title: "Digital Dreams",
+          artist: "Chris Wilson",
+          medium: "Digital Art",
+          style: "Contemporary",
+          price: 2900,
+          image:
+            "https://r2.starryai.com/results/563351892/334d7e3d-89cc-4086-af01-0076df54ff16.webp",
+          description:
+            "Contemporary digital artwork exploring dreamlike states.",
+            pageName: "Digitaldreams.html",
+        },
+        {
+          id: 22,
+          title: "Mountain Lake",
+          artist: "Emily Davis",
+          medium: "Watercolor",
+          style: "Realistic",
+          price: 4100,
+          image:
+            "https://w0.peakpx.com/wallpaper/91/265/HD-wallpaper-lake-in-spring-mountains-eric-wallis-art-painting-spring-fine-art-lake.jpg",
+          description: "Serene watercolor painting of a mountain lake.",
+          pageName: "mountainlake.html",
+        },
+        {
+          id: 23,
+          title: "Urban Abstract",
+          artist: "Michael Chen",
+          medium: "Mixed Media",
+          style: "Abstract",
+          price: 5100,
+          image:
+            "https://img.freepik.com/premium-photo/photo-urban-graffiti-art-4k-wallpaper_198067-122816.jpg",
+          description: "Abstract interpretation of urban landscapes.",
+          pageName: "UrbanAbstract.html",
+        },
+        {
+          id: 24,
+          title: "Spring Blossoms",
+          artist: "Hannah Kim",
+          medium: "Oil Painting",
+          style: "Impressionist",
+          price: 4800,
+          image:
+            "https://c1.wallpaperflare.com/preview/160/676/23/bird-blue-feathered-mood.jpg",
+          description: "Impressionist painting of spring cherry blossoms.",
+          pageName: "springblossoms.html",
+        },
+        {
+          id: 25,
+          title: "Geometric City",
+          artist: "Ryan Taylor",
+          medium: "Digital Art",
+          style: "Minimalist",
+          price: 2600,
+          image:
+            "https://easy-peasy.ai/cdn-cgi/image/quality=80,format=auto,width=700/https://fdczvxmwwjwpwbeeqcth.supabase.co/storage/v1/object/public/images/1b3fb2ed-cf5e-40f2-890d-3f93ce60b422/94dc6df0-0c86-4d38-a6c7-e31ea5ece0fd.png",
+          description:
+            "Minimalist digital representation of city architecture.",
+            pageName: "Geometric.html",
+        },
+        {
+          id: 26,
+          title: "Ocean Storm",
+          artist: "Jessica Lee",
+          medium: "Acrylic",
+          style: "Contemporary",
+          price: 3800,
+          image:
+            "https://www.shutterstock.com/shutterstock/videos/1107956937/thumb/1.jpg?ip=x480",
+          description: "Dynamic acrylic painting of an ocean storm.",
+          pageName: "oceanStorm.html",
+        },
+        {
+          id: 27,
+          title: "Peaceful Valley",
+          artist: "Andrew Wilson",
+          medium: "Oil Painting",
+          style: "Realistic",
+          price: 5900,
+          image:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVmXW1sG4iBHHOXlQapsSZaNghwVwnZYjNvA&s",
+          description: "Realistic oil painting of a tranquil valley landscape.",
+          pageName: "PeacefulValley.html",
+        },
+        {
+          id: 28,
+          title: "Digital Waves",
+          artist: "Sophie Chen",
+          medium: "Digital Art",
+          style: "Modern",
+          price: 3000,
+          image:
+            "https://img.freepik.com/premium-photo/hq-digital-art-image-wallpaper-hd-4k_783884-320437.jpg?w=360",
+          description: "Modern digital interpretation of wave patterns.",
+          pageName: "DigitalWaves.html",
+        },
+        {
+          id: 29,
+          title: "Abstract Nature",
+          artist: "David Brown",
+          medium: "Mixed Media",
+          style: "Abstract",
+          price: 4600,
+          image:
+            "https://m.media-amazon.com/images/I/91ylOZ8ZhTL._AC_UF894,1000_QL80_.jpg",
+          description: "Abstract exploration of natural forms and patterns.",
+          pageName: "Abstractnature.html",
+        },
+        {
+          id: 30,
+          title: "Winter Forest",
+          artist: "Emma Thompson",
+          medium: "Watercolor",
+          style: "Impressionist",
+          price: 3400,
+          image:
+            "https://w0.peakpx.com/wallpaper/679/62/HD-wallpaper-winter-morning-in-forest-glow-shore-beautiful-snowy-painting-river-sunrise-morning-reflection-frost-art-forest-lovely-creek-trees-winter-pond-snow-ice-sunshine-nature-frozen.jpg",
+          description: "Impressionist watercolor of a snow-covered forest.",
+          pageName: "WinterForest.html",
+        },
+      ];
+
+      // DOM Elements
+      const gallery = document.getElementById("gallery");
+      const modal = document.getElementById("modal");
+      const mediumFilter = document.getElementById("medium-filter");
+      const styleFilter = document.getElementById("style-filter");
+      const priceFilter = document.getElementById("price-filter");
+      const sortFilter = document.getElementById("sort-filter");
+
+      // Enhanced modal functionality
+      function showModal(artwork) {
+        document.getElementById("modal-image").src = artwork.image;
+        document.getElementById("modal-image").alt = artwork.title;
+        document.getElementById("modal-title").textContent = artwork.title;
+        document.getElementById(
+          "modal-artist"
+        ).textContent = `Artist: ${artwork.artist}`;
+        document.getElementById("modal-description").textContent =
+          artwork.description;
+        document.getElementById("modal-price").textContent =
+          artwork.price.toLocaleString();
+
+        modal.style.display = "flex";
+        // Trigger reflow
+        modal.offsetHeight;
+        modal.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeModal() {
+        modal.classList.remove("active");
+        setTimeout(() => {
+          modal.style.display = "none";
+          document.body.style.overflow = "";
+        }, 300);
+      }
+
+      // Filter and sort artworks
+      function filterAndSortArtworks() {
+        let filtered = [...artCollection];
+
+        if (mediumFilter.value) {
+          filtered = filtered.filter((art) =>
+            art.medium.toLowerCase().includes(mediumFilter.value.toLowerCase())
+          );
+        }
+
+        if (styleFilter.value) {
+          filtered = filtered.filter((art) =>
+            art.style.toLowerCase().includes(styleFilter.value.toLowerCase())
+          );
+        }
+
+        if (priceFilter.value) {
+          const [min, max] = priceFilter.value.split("-").map(Number);
+          filtered = filtered.filter((art) => {
+            if (max) {
+              return art.price >= min && art.price <= max;
+            }
+            return art.price >= min;
+          });
+        }
+
+        switch (sortFilter.value) {
+          case "price-low":
+            filtered.sort((a, b) => a.price - b.price);
+            break;
+          case "price-high":
+            filtered.sort((a, b) => b.price - a.price);
+            break;
+          case "newest":
+            filtered.sort((a, b) => b.id - a.id);
+            break;
+          case "popular":
+            filtered.sort(() => Math.random() - 0.5);
+            break;
+        }
+
+        return filtered;
+      }
+
+      // Render artwork cards with enhanced accessibility
+      function renderArtworks() {
+        gallery.innerHTML = "";
+        const filtered = filterAndSortArtworks();
+
+        filtered.forEach((artwork) => {
+          const artworkElement = document.createElement("div");
+          artworkElement.className = "artwork";
+          artworkElement.setAttribute("role", "button");
+          artworkElement.setAttribute("tabindex", "0");
+          artworkElement.setAttribute(
+            "aria-label",
+            `${artwork.title} by ${artwork.artist}`
+          );
+
+          artworkElement.innerHTML = `
+                    <img src="${artwork.image}" alt="${
+            artwork.title
+          }" loading="lazy">
+                    <div class="artwork-info">
+                        <h3>${artwork.title}</h3>
+                        <p>${artwork.artist}</p>
+                        <p>${artwork.medium}</p>
+                        <p class="price">${artwork.price.toLocaleString()}</p>
+                        <div class="row">
+                            <div class="col-12 text-end">
+                                <a href="${artwork.pageName}"><button class="btn btn-outline-primary" style="border-radius: 40px">View More</button></a>
+                                </div></div>
+                    </div>
+                `;
+
+          // Add click and keyboard event listeners
+          artworkElement.addEventListener("click", () => showModal(artwork));
+          artworkElement.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              showModal(artwork);
+            }
+          });
+
+          gallery.appendChild(artworkElement);
+        });
+      }
+
+      // Event Listeners
+      document
+        .getElementById("close-modal")
+        .addEventListener("click", closeModal);
+
+      // Close modal when clicking outside
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
+
+      // Close modal with Escape key
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modal.style.display === "flex") {
+          closeModal();
+        }
+      });
+
+      // Handle filter changes with debouncing
+      let filterTimeout;
+      [mediumFilter, styleFilter, priceFilter, sortFilter].forEach((filter) => {
+        filter.addEventListener("change", () => {
+          clearTimeout(filterTimeout);
+          filterTimeout = setTimeout(renderArtworks, 100);
+        });
+      });
+
+      // Handle window resize for responsive modal
+      let resizeTimeout;
+      window.addEventListener("resize", () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          if (modal.style.display === "flex") {
+            const modalContent = modal.querySelector(".modal-content");
+            modalContent.style.maxHeight = `${window.innerHeight * 0.9}px`;
+          }
+        }, 100);
+      });
+
+      // Initial render
+      renderArtworks();
+
+      // Preload images for better performance
+      window.addEventListener("load", () => {
+        artCollection.forEach((artwork) => {
+          const img = new Image();
+          img.src = artwork.image;
+        });
+      });
+    </script>
+  </body>
+</html>
